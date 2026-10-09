@@ -1,0 +1,120 @@
+\section{Introduction}
+
+\revise{Marine robots must operate under complex, highly variable ocean conditions. In practice, \textbf{currents and tides} can dominate vehicle motion, while field trials remain expensive and time-limited and at-sea sensing and communication are constrained \cite{Trends_Marine_Robotics}. Simulation is therefore essential, but existing platforms often trade off between (i) visually realistic underwater worlds, (ii) high-throughput, reproducible experimentation, and (iii) \textbf{ocean-condition realism grounded in real data}.}
+
+\revise{We present \textbf{OneOcean}, a data-grounded simulation suite and benchmark for marine robotics. OneOcean is built around a unified spatiotemporal ocean-environment dataset in Network Common Data Form (NetCDF). It harmonizes bathymetry from the General Bathymetric Chart of the Oceans (GEBCO) \cite{GEBCO2025} with data-driven currents and tides from the Copernicus Marine Service Global Ocean Physics Analysis and Forecast (GOPAF) product \cite{copernicus,CopernicusGOPAF2025}. OneOcean defines a \textbf{10-task benchmark} spanning single-agent navigation and tracking, spatial sensing and coverage, and multi-agent coordination and pollution-related tasks, with support for teams of 2--10 vehicles. The dataset variants support local iteration, scene construction, and public release under common task definitions. Figure~\ref{fig:overview} summarizes this organization.}
+
+\begin{table*}[!t]
+\centering
+\scriptsize
+\setlength{\tabcolsep}{0.6pt}
+\renewcommand{\arraystretch}{1.02}
+\textbf{Symbols:} \symyes\ Provided; \symno\ Not provided. \quad
+\textbf{Tasks:} G2G, SK, RF, DPT, AS, PI, FT, SPC, UPL, and FH.\par
+\begin{tabularx}{\textwidth}{@{}l c | *{9}{Y} *{10}{c}@{}}
+\toprule
+\textbf{Platform or Work} & \textbf{Venue}
+& \makecell{\textbf{Real-data}\\ \textbf{In Loop}}
+& \makecell{\textbf{Multi-}\\\textbf{agent}}
+& \makecell{\textbf{Cross-}\\\textbf{backend}}
+& \makecell{\textbf{3D}\\\textbf{Currents}}
+& \makecell{\textbf{Pollution}\\\textbf{or Spill}}
+& \makecell{\textbf{Tide}\\\textbf{Modeling}}
+& \makecell{\textbf{Canonical}\\\textbf{Task}}
+& \makecell{\textbf{Metrics}\\\textbf{Protocol}}
+& \makecell{\textbf{Headless}\\\textbf{Batch}}
+& \textbf{G2G} & \textbf{SK} & \textbf{RF} & \textbf{DPT} & \textbf{AS} & \textbf{PI} & \textbf{FT} & \textbf{SPC} & \textbf{UPL} & \textbf{FH} \\
+\midrule
+
+MIMIR-UW & 2023
+& \symno & \symno & \symno
+& \symno & \symno & \symno & \symno & \symno
+& \symyes
+& \symno & \symno & \symno & \symno & \symno & \symno & \symno & \symno & \symno & \symno \\
+
+HoloOcean 2.0 & 2025
+& \symno & \symyes & \symno
+& \symyes & \symno & \symno & \symno & \symno
+& \symyes
+& \symyes & \symyes & \symyes & \symyes & \symyes & \symyes & \symyes & \symno & \symno & \symno \\
+
+OceanSim & 2025
+& \symno & \symyes & \symno
+& \symno & \symno & \symno & \symno & \symno
+& \symyes
+& \symyes & \symno & \symyes & \symno & \symno & \symyes & \symyes & \symno & \symno & \symno \\
+
+MarineGym & IROS 2025
+& \symno & \symyes & \symyes
+& \symyes & \symyes & \symyes & \symyes & \symyes
+& \symyes
+& \symyes & \symyes & \symyes & \symno & \symno & \symno & \symyes & \symno & \symno & \symno \\
+
+OceanGym & 2025
+& \symno & \symyes & \symyes
+& \symyes & \symyes & \symno & \symyes & \symyes
+& \symyes
+& \symyes & \symyes & \symyes & \symno & \symyes & \symno & \symyes & \symno & \symno & \symno \\
+
+URLab & ICRA 2026
+& \symno & \symno & \symyes
+& \symno & \symno & \symno & \symno & \symyes
+& \symno
+& \symyes & \symno & \symno & \symno & \symno & \symno & \symno & \symno & \symno & \symno \\
+
+DREAM & ICRA 2026
+& \symno & \symno & \symno
+& \symno & \symno & \symno & \symno & \symyes
+& \symno
+& \symno & \symno & \symno & \symno & \symyes & \symyes & \symno & \symno & \symno & \symno \\
+
+Douro MARL & ICRA 2026
+& \symyes & \symyes & \symno
+& \symno & \symyes & \symyes & \symno & \symyes
+& \symyes
+& \symno & \symno & \symno & \symno & \symyes & \symno & \symno & \symno & \symno & \symno \\
+
+Map-TIDAL & ICRA 2026
+& \symno & \symyes & \symno
+& \symno & \symno & \symno & \symno & \symyes
+& \symno
+& \symno & \symno & \symno & \symno & \symyes & \symyes & \symno & \symno & \symno & \symno \\
+
+CAMAR & AAAI 2026
+& \symno & \symyes & \symno
+& \symno & \symno & \symno & \symyes & \symyes
+& \symyes
+& \symyes & \symno & \symno & \symno & \symno & \symno & \symno & \symno & \symno & \symno \\
+
+RobotArena $\infty$ & ICLR 2026
+& \symyes & \symno & \symno
+& \symno & \symno & \symno & \symyes & \symyes
+& \symyes
+& \symno & \symno & \symno & \symno & \symno & \symno & \symno & \symno & \symno & \symno \\
+
+CaP-X & ICML 2026
+& \symno & \symno & \symyes
+& \symno & \symno & \symno & \symyes & \symyes
+& \symyes
+& \symno & \symno & \symno & \symno & \symno & \symno & \symno & \symno & \symno & \symno \\
+
+\rowcolor{gray!20}%
+\textbf{OneOcean (ours)} & 2026
+& \symyes & \symyes & \symyes
+& \symyes & \symyes & \symyes & \symyes & \symyes
+& \symyes
+& \symyes & \symyes & \symyes & \symyes & \symyes & \symyes & \symyes & \symyes & \symyes & \symyes \\
+
+\bottomrule
+\end{tabularx}
+\caption{System-level comparison and task coverage. Entries are compiled from the cited papers and public documentation \cite{MIMIRUW,HoloOcean2,OceanSim,MarineGym,OceanGym,URLab2026,DREAM2026,DouroMARL2026,MapTIDAL2026,CAMAR2026,RobotArena2026,CaPX2026}.}
+\label{tab:platform_features_tasks}
+\end{table*}
+
+\revise{OneOcean provides two complementary execution backends that share task definitions and evaluation semantics. The \emph{core benchmark backend} runs deterministic episodes at scale and records standardized metrics and run configurations. The \emph{external underwater-scene backend} runs the same tasks in packaged underwater scenes from an existing simulator using OneOcean current exports.}
+In summary, our contributions are:
+\begin{itemize}
+    \item \revise{A shared ocean-environment dataset and tools for exporting currents to simulators, with variants for fast iteration, scene construction, and public release.}
+    \item \revise{A 10-task benchmark with difficulty tiers, standardized metrics, reproducible run records, and 3--6 DoF vehicle dynamics, with 6DoF used for the main quantitative evaluation.}
+    \item \revise{Experiments across the two backends that reveal task difficulty, scaling, and planner-compute trade-offs under data-grounded disturbances.}
+\end{itemize}

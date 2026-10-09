@@ -1,6 +1,6 @@
 # OneOcean Environment Dataset Contract
 
-This document defines the public boundary between an environment product and the OneOcean benchmark. The validator accepts a small set of aliases, reports the resolved mapping, and does not silently infer missing units or mask semantics.
+This document defines the dataset format accepted by the OneOcean benchmark. The validator accepts a small set of aliases, reports the resolved mapping, and reports missing units and mask definitions.
 
 ## Canonical schema
 
@@ -17,9 +17,9 @@ This document defines the public boundary between an environment product and the
 
 Current pairs are resolved in this order: `utotal/vtotal`, `uo/vo`, `water_u/water_v`, then `u/v`. Use `--u-var` and `--v-var` when a product has different names or when the automatic priority is not desired. Tide components (`utide/vtide`), salinity (`so`), temperature (`thetao`), sea-surface height (`zos`), and pollution fields are optional.
 
-The `land_mask` is a validity mask, not a guaranteed coastline classification. A terrain crop can also mark out-of-range or NoData cells. The merge step fills invalid `elevation` cells with zero for storage, so consumers must apply the mask; zero elevation at a masked cell is not a physical seabed measurement.
+The `land_mask` records terrain validity, including out-of-range and NoData cells. The merge step stores invalid `elevation` cells as zero. Consumers must apply the mask to exclude these storage placeholders.
 
-Single-depth products are valid 2D-current snapshots over time, but they are not evidence of a resolved 3D current field. The `tiny` product intentionally uses the near-surface layer. The `scene` and `public` products retain the actual depth levels returned by Copernicus Marine. Tide-enabled products use an explicitly documented engineering depth profile and must not be interpreted as a validated 3D tidal model.
+Single-depth products contain 2D-current snapshots over time. The `tiny` product uses the near-surface layer. The `scene` and `public` products retain the actual depth levels returned by Copernicus Marine. Tide-enabled products extend surface tide components across depth using the configured decay profile.
 
 ## Coordinates and simulation frame
 
@@ -35,7 +35,7 @@ A release product should record, where applicable:
 - coordinate repair, interpolation, extrapolation, and missing-value handling;
 - generation time and software/environment versions.
 
-Newly generated OneOcean products include portable source file names in NetCDF attributes and relative paths in `variant.json`; private absolute workspace paths are not part of the release contract.
+New products use portable source file names in NetCDF attributes and relative paths in `variant.json`.
 
 ## Validate a product
 
@@ -88,7 +88,7 @@ The current generated release set is:
 | `scene` | 32--33 N, 66.5--65.5 W; Dec. 2025 | 0--200 m; 26 layers | 240 × 240; 23 times | 689.88 MB | about 660 MiB | high-resolution simulation grounding |
 | `public` | 30--40 N, 72--62 W; 2025 | 0--200 m; 26 layers | 41 × 41; 357 times | 175.37 MB | about 1.2 GiB | broad-area public distribution |
 
-File bytes and directory allocation answer different questions: the NetCDF column reports the merged product itself, while the directory includes terrain crops, source subsets, metadata, and derived assets. Existing products generated before this contract pass with explained attribute warnings; regeneration writes the missing units and mask semantics.
+The NetCDF column reports the merged file size; the directory column includes source subsets, terrain crops, metadata, and derived assets. Existing products generated before this contract pass with explained attribute warnings; regeneration writes the missing units and mask semantics.
 
 ## Run a validated episode
 

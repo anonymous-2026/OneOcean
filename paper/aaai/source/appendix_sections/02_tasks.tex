@@ -1,0 +1,89 @@
+\section{Task Definitions}
+\label{app:tasks}
+
+Every task declares its objective, observations, feasibility constraints, success condition, and primary metric. Shared observations include pose and relative target cues, local current, and task-specific probes; shared feasibility checks include domain bounds, terrain validity, seafloor clearance, and configured team size.
+
+\begin{description}
+\item[Go-to-Goal Under Currents (G2G).] Reach a goal while rejecting data-grounded drift; success requires entering the goal tolerance, and final goal error is primary.
+\item[Station Keeping (SK).] Hold position under disturbance; station RMS error measures sustained deviation.
+\item[Route Following (RF).] Visit an ordered waypoint route; cross-track error and reached waypoints expose partial progress.
+\item[Depth-Profile Tracking (DPT).] Follow a target depth profile during motion; depth-tracking error is primary.
+\item[Area Scan (AS).] Cover a bounded region over 3D terrain; grid coverage fraction measures progress.
+\item[Pipeline Inspection (PI).] Follow a pipeline corridor and encounter leak cues; the inspection score is the detected-leak fraction, with route progress recorded separately.
+\item[Formation Transit (FT).] Move a team of 2--10 vehicles while maintaining relative geometry; formation error and collision ratio capture coordination quality.
+\item[Surface Pollution Cleanup (SPC).] Assign 2--10 vehicles to discrete surface sources and satisfy per-source dwell requirements; cleanup rate is completed-source fraction.
+\item[Underwater Pollution Lift (UPL).] Coordinate five vehicles around a payload and lift it to the surface; lift completion defines success.
+\item[Fish Protection / Herding (FH).] Use eight vehicles to contain and escort a fish school under currents; centroid progress toward the escort goal defines success.
+\end{description}
+
+\subsection{Exact progress metrics}
+
+Several task metrics are normalized ratios with distinct denominators. Let $\mathcal V$ be the visited scan cells in an $H\times W$ grid, $N_{\mathrm{det}}$ the detected leaks among $N_{\mathrm{leak}}$ placed leaks, and $N_{\mathrm{done}}$ the sources whose dwell requirement is complete among $N_{\mathrm{src}}$ sources. The released evaluator computes
+\begin{align}
+\mathrm{Cov}_{\mathrm{AS}}
+  &= \frac{|\mathcal V|}{HW}, \label{eq:as_progress}\\
+\mathrm{Score}_{\mathrm{PI}}
+  &= \frac{N_{\mathrm{det}}}{N_{\mathrm{leak}}}, \label{eq:pi_progress}\\
+\mathrm{Rate}_{\mathrm{SPC}}
+  &= \frac{N_{\mathrm{done}}}{N_{\mathrm{src}}}, \label{eq:spc_progress}\\
+e_{\mathrm{FT}}
+  &= \frac{1}{N}\sum_{i=1}^{N}
+     \left\|p_i-(p_g+r_i)\right\|_2, \label{eq:ft_error}\\
+\mathrm{Prog}_{\mathrm{FH}}(t)
+  &= \operatorname{clip}\!\left(1-\frac{d_t}{d_0},0,1\right). \label{eq:fh_progress}
+\end{align}
+Here $p_g+r_i$ is agent $i$'s assigned formation goal, while $d_t$ and $d_0$ are the current and initial fish-centroid distances to the escort goal. Each task reports its own progress metric.
+
+Tiers 1, 2, and 3 preserve the task definitions. Each tier specifies a joint setting of current gain, tolerances, route or coverage extent, sensing difficulty, and coordination requirements. Navigation and tracking tasks primarily stress disturbance rejection, sensing and inspection tasks stress spatial coverage and event encounters, and coordination and pollution tasks add team geometry, assignment, or dwell-time coupling.
+
+\subsection{State-dependent completion}
+
+\paragraph{Navigation and station keeping.}
+Let $d_n=\min_i\|p_i^n-p_g\|_2$. G2G completes when $d_n$ enters the goal radius. SK requires consecutive qualifying steps: its hold counter follows
+\begin{equation}
+h_{n+1}=\begin{cases}h_n+1,&d_n\leq r,\\0,&d_n>r.\end{cases}
+\end{equation}
+Success occurs when $h_{n+1}$ reaches the prescribed hold length. Consequently, an excursion outside the station radius restarts the hold interval. RF and DPT maintain an ordered waypoint index, advance it when a vehicle enters the active waypoint radius, and evaluate completion from the updated index and that step's waypoint distance. DPT additionally requires the team-mean absolute depth error relative to the evaluated waypoint to satisfy its depth tolerance. FT applies its tolerance to every assigned formation goal: $\max_i\|p_i-(p_g+r_i)\|_2\leq r$.
+
+\paragraph{Area coverage and inspection.}
+AS stores a persistent binary grid of visited cells. With sensor radius $r_s$ and cell width $\ell$, a vehicle marks a square neighborhood extending $\lfloor r_s/\ell\rfloor$ cells in each horizontal direction, clipped at the grid boundary. Cells are counted once. A lawnmower route supplies intermediate goals, while completion depends on the coverage fraction in Equation~\ref{eq:as_progress}. PI maintains a separate detection flag for each leak. A flag becomes permanent when any vehicle enters the leak's detection radius; the first encounter time is recorded. Detection of all leaks completes the task, and the waypoint index records traversal progress separately.
+
+\paragraph{Accumulated service in surface cleanup.}
+For source $j$, let $a_i^n$ denote agent $i$'s assigned source and $q$ the required number of agents. Its accumulated service time is
+\begin{align}
+b_j^n&=\sum_i\mathbf 1[a_i^n=j]\,
+                 \mathbf 1[\|p_i^n-s_j\|_2\leq r],\\
+\tau_j^{n+1}&=\tau_j^n+\Delta t\,\mathbf 1[b_j^n\geq q].
+\end{align}
+A source completes when $\tau_j$ reaches its dwell threshold. Service already accumulated is retained when vehicles leave; this differs from the consecutive hold in SK. Only vehicles assigned to that source contribute to its service count. The task completes once every source is finished. The hard preset couples assignment with rendezvous by requiring two agents to service a source simultaneously.
+
+\paragraph{Attachment and collective lifting.}
+UPL has four phases: approach, lift-off, fifth-agent joining, and ascent. Each of the five agents acquires a persistent attachment flag upon entering the payload attachment radius. Attachment of the first four agents starts the lift-off hold; completing that hold enables joining, and attachment of the fifth agent enables ascent. During the lifting phases the payload follows the attached team's mean position with a phase-dependent depth update. Completion requires the ascent phase, all five attachments, and payload depth at or above the designated surface threshold.
+
+\paragraph{Fish-school escort.}
+FH evolves a school under current drift and a herding response to nearby vehicles. Its progress uses the horizontal distance between the school centroid and escort goal. The eight-vehicle team succeeds when either the normalized progress in Equation~\ref{eq:fh_progress} reaches its target or the centroid enters the goal radius.
+
+\begin{table*}[t]
+\centering\scriptsize
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.13}
+\begin{tabularx}{\textwidth}{l X X r r}
+\toprule
+\textbf{Task} & \textbf{Tier 2 parameters} & \textbf{Tier 3 parameters} & \multicolumn{2}{c}{\textbf{Step budget}}\\
+ & & & \textbf{Tier 2} & \textbf{Tier 3}\\
+\midrule
+G2G & Goal radius 4\,m & Goal radius 1.3\,m & 280 & 300\\
+SK & Radius 2.6\,m; hold 110 steps & Radius 1.3\,m; hold 240 steps & 360 & 560\\
+RF & 12 waypoints; radius 3.2\,m & 20 waypoints; radius 1.6\,m & 460 & 560\\
+DPT & 12 waypoints; radius 3.6\,m; depth tolerance 1.2\,m & 18 waypoints; radius 1.8\,m; depth tolerance 0.7\,m & 560 & 720\\
+FT & Formation radius 36\,m; goal tolerance 4\,m & Formation radius 70\,m; goal tolerance 1\,m & 600 & 550\\
+SPC & 12 sources; radius 3.8\,m; dwell 8\,s; one agent & 6 sources; radius 2.6\,m; dwell 6\,s; two agents & 720 & 900\\
+UPL & Attach radius 4\,m; hold 3.5\,s; surface depth 2.5\,m & Attach radius 3\,m; hold 4\,s; surface depth 2.5\,m & 720 & 880\\
+FH & 220 fish; progress 0.995 or goal radius 12\,m & 160 fish; progress 0.99 or goal radius 7\,m & 650 & 900\\
+AS & Cell 75\,m; sensor radius 35\,m; coverage 0.82 & Cell 60\,m; sensor radius 70\,m; coverage 0.95 & 2000 & 1700\\
+PI & 14 waypoints; 6 leaks; detection radius 5\,m & 20 waypoints; 8 leaks; detection radius 3.6\,m & 1500 & 1500\\
+\bottomrule
+\end{tabularx}
+\caption{Task-specific parameters for the two principal evaluation tiers. Durations follow from the step budget and simulation timestep; the default $\Delta t$ is 1\,s. UPL uses five vehicles and FH uses eight.}
+\label{tab:app_task_thresholds}
+\end{table*}

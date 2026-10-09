@@ -1,6 +1,6 @@
 # Dynamics and Pollution Model Scope
 
-This document maps the benchmark's engineering models to the public configuration fields. These models provide deterministic, configurable task dynamics; they are not a vehicle-identified hydrodynamic simulator or a field-validated pollution forecast.
+This document describes the benchmark dynamics, pollution models, and their configuration fields.
 
 ## Core frame and current coupling
 
@@ -20,7 +20,7 @@ For diagonal mass `M`, damping `D`, and tracking gains, the implemented update i
 
 `nu_cmd_linear` is the commanded world-relative velocity transformed into the body frame. The angular command aligns yaw with horizontal motion and stabilizes roll/pitch. Integration uses the configured `dt_s`; linear speed, angular rate, depth, tilt, tile bounds, terrain validity, and seafloor clearance are clipped or rejected by the shared constraint path.
 
-The model intentionally omits identified added mass, Coriolis terms, restoring forces, thruster allocation, actuator lag, waves on a vehicle hull, and two-way fluid coupling. The current enters as an externally sampled transport velocity rather than a solved hydrodynamic load.
+The model omits identified added mass, Coriolis terms, restoring forces, thruster allocation, actuator lag, waves on a vehicle hull, and two-way fluid coupling. Current enters as an externally sampled transport velocity.
 
 ## Dynamics modes
 
@@ -28,9 +28,9 @@ The model intentionally omits identified added mass, Coriolis terms, restoring f
 |---|---|---|
 | `kinematic` | Directly integrates commanded relative velocity plus current | Fast debugging and contract checks |
 | `3dof` | Uses the diagonal velocity model but suppresses roll and pitch; translation and yaw remain | Stable planar-attitude ablation |
-| `6dof` | Integrates three relative linear and three angular rates with bounded attitude | Default paper-facing engineering dynamics |
+| `6dof` | Integrates three relative linear and three angular rates with bounded attitude | Default 6DoF model |
 
-The name `6dof` refers to the six-component body velocity and pose update, not to a claim of high-fidelity vehicle hydrodynamics.
+The name `6dof` refers to the six-component body velocity and pose update.
 
 ## Default dynamics parameters
 
@@ -50,7 +50,7 @@ The name `6dof` refers to the six-component body velocity and pose update, not t
 | `dyn_attitude_rate_kp` | `2.0` | roll/pitch stabilization gain |
 | `dyn_max_tilt_rad` | `0.6` | roll/pitch safety limit |
 
-All fields are serialized in `run_meta.json` and `spec_snapshot.json`. They can be overridden by constructing `EnvConfig`; paper CLI flags expose the mode and the environment-level current/constraint settings.
+All fields are serialized in `run_meta.json` and `spec_snapshot.json`. They can be overridden by constructing `EnvConfig`; benchmark CLI flags expose the mode and the environment-level current/constraint settings.
 
 ## Pollution observations
 
@@ -58,7 +58,7 @@ Each agent receives a scalar probe
 
 `o_i^c(t) = C(p_i(t), t)`.
 
-The field is synthetic and regeneratable under the recorded seed. It supplies controlled task signals and does not represent in-situ pollution labels.
+The synthetic field supplies controlled task signals and is regenerated from the recorded seed.
 
 ### Analytic Gaussian
 
@@ -86,12 +86,11 @@ The OCPNet-backed option numerically advances an advection--diffusion--reaction-
 | `sink_radius_m` | `8.0` |
 | `sink_strength_per_s` | `0.15` |
 
-The 2D dataset current is resampled and repeated over model depth, with zero vertical current. This is an explicit engineering approximation rather than a measured 3D velocity profile. The sink multiplies cells in the configured agent neighborhood by `max(0, 1 - sink_strength_per_s × time_step_s)`.
+The horizontal dataset current is resampled and repeated over model depth, with zero vertical current. The sink multiplies cells in the configured agent neighborhood by `max(0, 1 - sink_strength_per_s × time_step_s)`.
 
-## Task semantics are not interchangeable
+## Pollution task definitions
 
 - `pollution_localization` evaluates distance to a hidden concentration source.
 - `pollution_containment_multiagent` is an internal continuous-field task that uses sink-driven remaining mass.
-- `surface_pollution_cleanup_multiagent` is a canonical discrete-source service task: assigned agents must remain within the task radius for `cleanup_dwell_s`, after which that source is marked complete. Medium difficulty uses 12 sources, 8 s dwell, and one required agent; hard difficulty uses 6 sources, 6 s dwell, and two required agents.
-
-The canonical surface-cleanup results therefore measure source-assignment and service completion, not removed concentration mass. Changing them to continuous-field cleanup would change the benchmark semantics and require a new experiment version; the current release documents the distinction instead of retroactively relabeling existing results.
+- Surface Pollution Cleanup (SPC), `surface_pollution_cleanup_multiagent`, measures the fraction of completed discrete sources. Assigned agents must remain within the task radius for `cleanup_dwell_s`, after which that source is marked complete. Medium difficulty uses 12 sources, 8 s dwell, and one required agent; hard difficulty uses 6 sources, 6 s dwell, and two required agents.
+- Underwater Pollution Lift (UPL), `underwater_pollution_lift_5uuv`, uses five agents to lift a payload to the surface threshold. Four agents attach and hold the initial lift; a fifth joins before the team carries the payload upward.

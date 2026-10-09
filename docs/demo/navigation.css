@@ -1,0 +1,12 @@
+.oneocean-site-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 14px;
+  margin-bottom: 14px;
+  font-size: 12px;
+  font-weight: 600;
+}
+.oneocean-site-nav a { color: #175c82; text-decoration: none; }
+.oneocean-site-nav a:hover, .oneocean-site-nav a:focus-visible { text-decoration: underline; }
+.layout > .oneocean-site-nav a { color: #b7e1f7; }
+.layout:has(> .oneocean-site-nav) { grid-template-rows: auto 1fr auto; }

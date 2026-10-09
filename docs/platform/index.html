@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>OneOcean | Platform</title>
-  <meta name="description" content="OneOcean platform guide: inspect ocean-data grounding, preview a deployable subset, and run benchmark evaluation across quantitative and scene-backed backends.">
+  <meta name="description" content="OneOcean platform guide: combine bathymetry and ocean currents, explore a dataset sample, and run marine robotics benchmarks.">
   <meta name="robots" content="index, follow">
   <meta name="theme-color" content="#0d3b66">
   <link rel="icon" type="image/png" href="../static/logo.png">
@@ -32,9 +32,9 @@
         </div>
         <div class="platform-nav-group platform-nav-group-global">
           <a href="../">Project Page</a>
-          <a href="https://anonymous-2026.github.io/demo" target="_blank" rel="noopener">Online Demo</a>
+          <a href="../demo/" target="_blank" rel="noopener">Online Demo</a>
           <a href="https://github.com/anonymous-2026/OneOcean" target="_blank" rel="noopener">Code</a>
-          <a href="../oneocean_paper.pdf" target="_blank" rel="noopener">Paper</a>
+          <a href="../oneocean_paper.pdf?v=aaai-21632439d4" target="_blank" rel="noopener">Paper</a>
         </div>
       </nav>
     </div>
@@ -44,9 +44,9 @@
     <section class="platform-hero">
       <div class="platform-shell platform-hero-inner">
         <p class="platform-kicker">Platform Guide</p>
-        <h1>Ocean grounding for underwater embodied-agent research.</h1>
+        <h1>Ocean data for marine robotics.</h1>
         <p class="platform-hero-copy">
-          OneOcean provides data-grounded ocean context for underwater embodied-agent benchmarks. The same grounding is reused across quantitative evaluation, scene-backed execution, and a browser-accessible demo on GitHub Pages.
+          Combine bathymetry and ocean currents to build environments, run benchmark tasks, and explore ocean conditions in the browser.
         </p>
         <div class="platform-hero-actions">
           <a class="platform-button platform-button-primary" href="#explorer">Open explorer</a>
@@ -60,26 +60,26 @@
       <div class="platform-shell">
         <div class="platform-section-head">
           <p class="platform-kicker">Overview</p>
-          <h2>How this page maps to the paper workflow</h2>
+          <h2>From ocean data to benchmark tasks</h2>
           <p>
-            The paper evaluates methods on tasks grounded in a shared ocean dataset. This page keeps that structure explicit: acquire or rebuild the grounding dataset, export the right footprint, then reuse that footprint across quantitative and scene-backed evaluation.
+            Acquire the ocean dataset, choose a variant, and export currents for the core or underwater-scene backend.
           </p>
         </div>
         <div class="platform-card-grid platform-card-grid-3">
           <article class="platform-card">
             <span class="platform-step">01</span>
-            <h3>Acquire or regenerate</h3>
+            <h3>Acquire the data</h3>
             <p>Start from the released dataset or rebuild a custom crop from Copernicus Marine currents and GEBCO bathymetry.</p>
           </article>
           <article class="platform-card">
             <span class="platform-step">02</span>
-            <h3>Export the right footprint</h3>
+            <h3>Choose a dataset variant</h3>
             <p>Choose tiny, scene, or public variants depending on whether the target is debugging, browser preview, task deployment, or public release.</p>
           </article>
           <article class="platform-card">
             <span class="platform-step">03</span>
-            <h3>Drive tasks consistently</h3>
-            <p>Use the same grounded currents in both backends so tables, videos, screenshots, and manifests all trace back to one environment contract.</p>
+            <h3>Run benchmark tasks</h3>
+            <p>Export currents from the selected dataset and run tasks with the core or OceanGym backend.</p>
           </article>
         </div>
       </div>
@@ -91,7 +91,7 @@
           <p class="platform-kicker">Data Subset Example</p>
           <h2>Web subset demo</h2>
           <p>
-            This is not the full OneOcean dataset. The browser demo only uses a very small static subset sampled from the public release so GitHub Pages can load it quickly while still showing time, depth, and spatial filtering plus multiple ocean variables.
+            Explore a sample of the public dataset by time, depth, region, and ocean variable.
           </p>
         </div>
 
@@ -194,7 +194,7 @@
               </div>
 
               <p class="platform-note">
-                The explorer averages the selected time interval and clips the view to the selected geographic range. This is a visualization sample, not the full research artifact.
+                The explorer averages the selected time interval and clips the view to the selected geographic range.
               </p>
             </section>
           </div>
@@ -224,21 +224,21 @@
       <div class="platform-shell">
         <div class="platform-section-head">
           <p class="platform-kicker">Resolution</p>
-          <h2>Data fidelity</h2>
+          <h2>Dataset resolution</h2>
           <p>
-            This section reports the best precision profile we use for research runs. It is the reference fidelity for training and evaluation, independent of convenience exports used for local workflow.
+            The scene variant combines currents sampled on a 0.083° source grid with GEBCO bathymetry. Its export grid, depth levels, and time sampling are listed below.
           </p>
         </div>
         <div class="platform-card-grid platform-card-grid-1">
           <article class="platform-card">
-            <h3>Research-grade precision profile</h3>
+            <h3>Scene dataset resolution</h3>
             <div class="platform-precision-grid">
               <div class="platform-precision-item">
-                <span class="platform-precision-k">Horizontal step (default)</span>
-                <span class="platform-precision-v">~0.00418° (about 460 m), supports meter-level local interpolation grids</span>
+                <span class="platform-precision-k">Horizontal step (scene export)</span>
+                <span class="platform-precision-v">~0.00418° (about 460 m); meter-level local grids available through interpolation</span>
               </div>
               <div class="platform-precision-item">
-                <span class="platform-precision-k">Spatial grid (default release)</span>
+                <span class="platform-precision-k">Spatial grid (scene export)</span>
                 <span class="platform-precision-v">240 × 240</span>
               </div>
               <div class="platform-precision-item">
@@ -250,7 +250,7 @@
                 <span class="platform-precision-v">Daily by default, supports hourly products where available</span>
               </div>
             </div>
-            <p class="platform-subnote">The default profile above reflects released real ocean observations/reanalysis. Finer meter-level grids are interpolation outputs for rendering or simulation and do not add new measured physical detail beyond the source products.</p>
+            <p class="platform-subnote">Currents are interpolated onto the scene export grid. Finer grids and custom depth samples are generated by interpolation for rendering and simulation.</p>
           </article>
         </div>
       </div>
@@ -269,8 +269,8 @@
         <div class="platform-card-grid platform-card-grid-4">
           <article class="platform-card"><span class="platform-step">01</span><h3>Ocean fields</h3><p>Copernicus Marine variables such as currents, SSH, salinity, and temperature.</p></article>
           <article class="platform-card"><span class="platform-step">02</span><h3>Bathymetry</h3><p>GEBCO GeoTIFF crops provide terrain structure and masking for the requested region.</p></article>
-          <article class="platform-card"><span class="platform-step">03</span><h3>Merge and align</h3><p>The pipeline interpolates, aligns, merges, and writes the grounding dataset artifact.</p></article>
-          <article class="platform-card"><span class="platform-step">04</span><h3>Export and reuse</h3><p>Produce reusable variants, drift exports, and scene-facing task assets with consistent manifests.</p></article>
+          <article class="platform-card"><span class="platform-step">03</span><h3>Merge and align</h3><p>The pipeline interpolates and aligns the fields, then writes the combined NetCDF dataset.</p></article>
+          <article class="platform-card"><span class="platform-step">04</span><h3>Export and reuse</h3><p>Produce dataset variants and current exports for both backends.</p></article>
         </div>
 
         <div class="platform-card-grid platform-card-grid-2 platform-detail-grid">
@@ -282,7 +282,7 @@
   --start 2024-06-01T00:00:00 --end 2024-06-30T00:00:00 \
   --depths "0,10,20,50,100,200" \
   --include-tides</code></pre></div>
-            <p class="platform-subnote">If tides are surface-only, the pipeline applies a configurable depth-decay profile. This is an engineering approximation, not a full 3D tidal model.</p>
+            <p class="platform-subnote">Surface tide components are extended across depth using a configurable decay profile.</p>
           </article>
           <article class="platform-card">
             <h3>Export variants for different uses</h3>
@@ -292,7 +292,7 @@
   --overwrite</code></pre></div>
             <ul class="platform-list platform-list-tight">
               <li><strong>tiny:</strong> fast debugging and small browser-safe exports</li>
-              <li><strong>scene:</strong> main scene grounding footprint for task deployment</li>
+              <li><strong>scene:</strong> dataset variant for underwater-scene tasks</li>
               <li><strong>public:</strong> broader temporal coverage with lighter spatial resolution</li>
             </ul>
           </article>
@@ -343,7 +343,7 @@
             <div class="platform-source-cell"><a href="https://figshare.com/articles/dataset/CORA_2_0_2016-2019/21828453" target="_blank" rel="noopener">China Ocean ReAnalysis (CORA) products and China Global Ocean Fusion Dataset (CGOFD) track</a></div>
             <div class="platform-source-cell">National Marine Data and Information Service (NMDIS), Ministry of Natural Resources, China</div>
           </div>
-          <p class="platform-subnote platform-source-note">Note: dataset names can evolve across releases. OneOcean records the exact source version and footprint in export manifests for reproducibility.</p>
+          <p class="platform-subnote platform-source-note">Export manifests record the source product, version, and geographic extent.</p>
         </div>
       </div>
     </section>
@@ -352,16 +352,16 @@
       <div class="platform-shell">
         <div class="platform-section-head">
           <p class="platform-kicker">Execution</p>
-          <h2>Two backend modes, one environment grounding</h2>
+          <h2>Two backends with shared ocean data</h2>
           <p>
-            The core benchmark backend is optimized for scale, tables, and reproducible run manifests. The OceanGym scene backend is optimized for underwater scene semantics, screenshots, GIFs, and qualitative task evidence. Both consume currents derived from the same grounding dataset.
+            The core backend runs large task and difficulty sweeps. The OceanGym backend runs tasks in packaged underwater scenes. Both use currents exported from the same ocean dataset.
           </p>
         </div>
 
         <div class="platform-card-grid platform-card-grid-2">
           <article class="platform-card">
             <h3>Core benchmark backend (<code>benchmark_core</code>)</h3>
-            <p>Export a drift cache from <code>combined_environment.nc</code>, then run task matrices with shared metrics and reproducible manifests.</p>
+            <p>Export a drift cache from <code>combined_environment.nc</code>, then run task and difficulty sweeps with shared metrics.</p>
             <div class="platform-code-wrap"><button class="platform-copy-btn" type="button" data-copy-target="cmd-core-backend">Copy</button><pre class="platform-code"><code id="cmd-core-backend">python -m benchmark_core.cli.export_drift_cache \
   --nc Data_pipeline/Data/Combined/variants/scene/combined/combined_environment.nc \
   --u-var utotal --v-var vtotal --time-index 0 --depth-index 0 \
@@ -377,7 +377,7 @@ python -m benchmark_core.cli.run_matrix \
           </article>
           <article class="platform-card">
             <h3>OceanGym scene backend (<code>tracks/oceangym_benchmark</code>)</h3>
-            <p>Export a time series of grounded currents and inject them into the scene task suite for qualitative deployment evidence and task videos.</p>
+            <p>Export a time series of ocean currents and inject them into the underwater-scene task suite.</p>
             <div class="platform-code-wrap"><button class="platform-copy-btn" type="button" data-copy-target="cmd-scene-backend">Copy</button><pre class="platform-code"><code id="cmd-scene-backend">python tracks/oceangym_benchmark/export_current_series_npz.py \
   --dataset Data_pipeline/Data/Combined/combined_environment.nc \
   --out_npz runs/_cache/data_grounding/currents/cmems_center_uovo.npz
@@ -392,12 +392,12 @@ python tracks/oceangym_benchmark/run_task_suite.py \
 
         <div class="platform-card-grid platform-card-grid-2 platform-detail-grid">
           <article class="platform-card platform-card-accent">
-            <h3>Use <code>benchmark_core</code> when</h3>
-            <p>you need broad method comparisons, reproducible tables, difficulty sweeps, and larger run matrices.</p>
+            <h3>Core benchmark runs</h3>
+            <p>Run large task and difficulty sweeps with the core backend.</p>
           </article>
           <article class="platform-card platform-card-accent">
-            <h3>Use <code>oceangym_benchmark</code> when</h3>
-            <p>you need scene semantics, screenshots, GIFs, MP4s, and qualitative validation inside packaged environments.</p>
+            <h3>Underwater-scene runs</h3>
+            <p>Run tasks in packaged underwater scenes with the OceanGym backend.</p>
           </article>
         </div>
       </div>
@@ -409,7 +409,7 @@ python tracks/oceangym_benchmark/run_task_suite.py \
           <p class="platform-kicker">Reuse</p>
           <h2>Publish artifacts others can rerun</h2>
           <p>
-            The practical public bundle is small and explicit: a released environment footprint, its manifest, representative run manifests, and the media proving that the scene backend really consumed the same grounding.
+            A reproducible release includes the ocean dataset, export settings, run configurations, results, and task demonstrations.
           </p>
         </div>
         <div class="platform-card-grid platform-card-grid-2">
@@ -417,14 +417,14 @@ python tracks/oceangym_benchmark/run_task_suite.py \
             <h3>Recommended artifact bundle</h3>
             <ul class="platform-list">
               <li><code>combined_environment.nc</code> or the specific exported variant used in the study</li>
-              <li><code>variants/&lt;tier&gt;/variant.json</code> with the exact footprint</li>
+              <li><code>variants/&lt;tier&gt;/variant.json</code> with the geographic extent and export settings</li>
               <li><code>runs/benchmark_core/**/results_manifest.json</code></li>
               <li><code>runs/oceangym_benchmark/**/media/</code> screenshots, GIFs, and MP4s</li>
             </ul>
           </article>
           <article class="platform-card">
-            <h3>GitHub Pages deployment</h3>
-            <p>The website is served directly from <code>docs/</code>. The explorer remains GitHub-Pages-compatible because it uses a pre-exported static subset instead of server-side filtering.</p>
+            <h3>Dataset downloads</h3>
+            <p>Download the public dataset from <a href="https://zenodo.org/records/18837700" target="_blank" rel="noopener">Zenodo</a> or <a href="https://huggingface.co/datasets/anonymous321123/OneOcean_Environment_Dataset" target="_blank" rel="noopener">Hugging Face</a>.</p>
           </article>
         </div>
       </div>

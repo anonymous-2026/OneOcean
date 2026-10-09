@@ -659,7 +659,7 @@ function renderExplorer() {
   updateLegend(controls, fieldMode);
 
   controls.narrative.textContent =
-    `This demo renders a small static subset (${dataset.metadata.grid_shape[0]} x ${dataset.metadata.grid_shape[1]}, ${dataset.metadata.depth_count} depth levels, ${dataset.time.length} dates) to keep GitHub Pages responsive while preserving real ocean variation.`;
+    `Sample: ${dataset.metadata.grid_shape[0]} × ${dataset.metadata.grid_shape[1]} grid, ${dataset.metadata.depth_count} depth levels, ${dataset.time.length} dates.`;
 
   controls.meta.innerHTML = [
     `Time: ${formatDateLabel(dataset.time[subset.timeStart])} -> ${formatDateLabel(dataset.time[subset.timeEnd])}`,
@@ -694,7 +694,7 @@ async function bootstrapExplorer() {
   } catch (error) {
     const narrative = document.getElementById('explorerNarrative');
     if (narrative) {
-      narrative.textContent = 'The web subset failed to load. Rebuild docs/static/data/oneocean_public_currents_subset.json and refresh the page.';
+      narrative.textContent = 'The data preview could not be loaded. Please refresh the page.';
     }
     console.error(error);
   }

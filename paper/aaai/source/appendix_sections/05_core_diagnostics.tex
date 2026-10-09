@@ -1,0 +1,120 @@
+\section{Additional Core-Backend Diagnostics}
+\label{app:core_diagnostics}
+
+\subsection{Dynamics-mode sensitivity}
+
+Table~\ref{tab:app_dynamics_ablation} selects the hard-setting tasks with the largest observed dynamics sensitivity from a 20-episode-per-task diagnostic.
+
+\begin{table}[t]
+\centering
+\scriptsize
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.10}
+\begin{tabularx}{\columnwidth}{l *{3}{Y}}
+\toprule
+\textbf{Hard task} & \textbf{Kinematic SR} & \textbf{3DoF SR} & \textbf{6DoF SR} \\
+\midrule
+Formation Transit & 55\% & 50\% & 50\% \\
+Surface Cleanup & 95\% & 85\% & 85\% \\
+Pollution Lift & 100\% & 75\% & 75\% \\
+All-task macro & 85.5\% & 81.5\% & 81.5\% \\
+\bottomrule
+\end{tabularx}
+\caption{Selected dynamics sensitivity at hard difficulty (20 episodes per task and mode).}
+\label{tab:app_dynamics_ablation}
+\end{table}
+
+Across all ten hard tasks, macro SR is 85.5\% for kinematic and 81.5\% for both 3DoF and 6DoF. Under this controller, bounded roll and pitch leave terminal success unchanged in the diagnostic, while direct kinematic integration yields higher macro success.
+
+\subsection{Current and synthetic-tide stress}
+
+\begin{table}[!t]
+\centering
+\scriptsize
+\setlength{\tabcolsep}{2pt}
+\renewcommand{\arraystretch}{1.08}
+\begin{tabularx}{\columnwidth}{@{}>{\raggedright\arraybackslash}X l r r r r@{}}
+\toprule
+\textbf{Stress} & \textbf{Method} & \textbf{$N$} & \textbf{SR} & \textbf{$E$} & \textbf{Coll.} \\
+\midrule
+Data current, $g=0$ & Heuristic & 50 & 48.0 & 3232.5 & 5.80 \\
+Data current, $g=1$ & Heuristic & 50 & 20.0 & 3371.6 & 8.24 \\
+Data current, $g=2$ & Heuristic & 50 & 8.0 & 3775.0 & 9.86 \\
+Data current, $g=0$ & BC & 50 & 6.0 & 1546.8 & 4.14 \\
+Data current, $g=1$ & BC & 50 & 12.0 & 1807.1 & 4.96 \\
+Data current, $g=2$ & BC & 50 & 4.0 & 2323.3 & 2.44 \\
+Synthetic tide & Heuristic & 100 & 17.0 & 3489.2 & 6.29 \\
+Synthetic tide & BC & 100 & 1.0 & 1557.6 & 6.49 \\
+\bottomrule
+\end{tabularx}
+\caption{Hard-setting disturbance diagnostics across all ten tasks. SR and Coll. are percentages. Each data-current row contains five episodes per task. The synthetic-tide rows contain ten episodes per task, use $g=0$, and apply a 0.45\,m\,s$^{-1}$ sinusoid with a 300\,s period.}
+\label{tab:app_disturbance_stress}
+\end{table}
+
+Heuristic SR decreases from 48.0\% without data-current forcing to 8.0\% at doubled current, while its energy and collision exposure increase. BC success varies non-monotonically with current gain and reaches its lowest value at $g=2$. The synthetic-tide stress also separates the methods, with 17.0\% SR for the heuristic and 1.0\% for BC.
+
+\subsection{Planner validity, fallback, and cost}
+
+The instrumented diagnostic contains three medium-difficulty seeds for each of eight methods and three tasks, for 72 episodes total. Tables~\ref{tab:app_llm_model_outcomes} and \ref{tab:app_llm_model_costs} aggregate each Large Language Model (LLM) across its nine episodes. Valid-plan ratio is weighted by planner calls; latency and tokens are weighted by uncached calls.
+
+\begin{table}[!ht]
+\centering
+\scriptsize
+\setlength{\tabcolsep}{2.5pt}
+\renewcommand{\arraystretch}{1.08}
+\begin{tabularx}{\columnwidth}{l *{5}{Y}}
+\toprule
+\textbf{LLM} & \textbf{SR} & \textbf{Calls} & \textbf{Valid} & \textbf{Fallback} & \textbf{Comp.} \\
+\midrule
+ChatGLM3-6B & 0.556 & 49 & 0.367 & 0.633 & 0.758 \\
+Llama2-7B & 0.333 & 60 & 0.950 & 0.050 & 0.736 \\
+Llama3-8B & 0.444 & 61 & 0.869 & 0.131 & 0.786 \\
+Mistral-7B & 0.556 & 55 & 0.800 & 0.200 & 0.804 \\
+Qwen2-7B & 0.556 & 43 & 0.814 & 0.186 & 0.790 \\
+Qwen2.5-7B & 0.667 & 59 & 0.864 & 0.136 & 0.809 \\
+\bottomrule
+\end{tabularx}
+\caption{Per-model planning outcomes across SPC, AS, and PI (nine episodes per LLM).}
+\label{tab:app_llm_model_outcomes}
+\end{table}
+
+\begin{table}[!ht]
+\centering
+\scriptsize
+\setlength{\tabcolsep}{3pt}
+\renewcommand{\arraystretch}{1.08}
+\begin{tabularx}{\columnwidth}{l *{3}{Y}}
+\toprule
+\textbf{LLM} & \makecell{\textbf{Latency}\\\textbf{ms per call}} & \makecell{\textbf{Prompt}\\\textbf{tokens per call}} & \makecell{\textbf{Output}\\\textbf{tokens per call}} \\
+\midrule
+ChatGLM3-6B & 1466.1 & 628.1 & 76.7 \\
+Llama2-7B & 7429.6 & 633.7 & 728.7 \\
+Llama3-8B & 2068.1 & 454.1 & 475.9 \\
+Mistral-7B & 5150.6 & 616.5 & 676.7 \\
+Qwen2-7B & 2370.6 & 603.3 & 628.6 \\
+Qwen2.5-7B & 2184.5 & 600.6 & 623.9 \\
+\bottomrule
+\end{tabularx}
+\caption{Uncached per-call planning cost in the same diagnostic.}
+\label{tab:app_llm_model_costs}
+\end{table}
+
+\begin{table}[t]
+\centering
+\scriptsize
+\setlength{\tabcolsep}{3pt}
+\renewcommand{\arraystretch}{1.08}
+\begin{tabularx}{\columnwidth}{l *{5}{Y}}
+\toprule
+\textbf{Task} & \textbf{SR} & \textbf{Valid} & \textbf{Fallback} & \makecell{\textbf{Latency}\\\textbf{ms per call}} & \textbf{Completion} \\
+\midrule
+SPC & 0.833 & 0.430 & 0.570 & 3199.0 & 0.972 \\
+AS & 0.278 & 0.831 & 0.169 & 3602.0 & 0.758 \\
+PI & 0.444 & 0.891 & 0.109 & 3337.1 & 0.611 \\
+\bottomrule
+\end{tabularx}
+\caption{Cross-model planner diagnostics by task (six LLMs, three seeds each).}
+\label{tab:app_llm_task_audit}
+\end{table}
+
+Model-level and task-level rankings also diverge: Llama2-7B attains 0.950 validity but only 0.333 SR, whereas ChatGLM3-6B attains 0.367 validity and 0.556 SR. At task level, cleanup's low valid ratio coexists with high completion because invalid or duplicate assignments can fall back to the deterministic task allocator; AS can revisit covered cells despite valid syntax, and PI still requires physical leak encounters between low-frequency plans. We report validity, fallback frequency, and task success separately.

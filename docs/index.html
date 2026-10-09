@@ -6,7 +6,8 @@
   <meta name="title" content="OneOcean: A Data-Grounded Simulation Suite and Benchmark for Marine Robotics">
   <meta name="description" content="OneOcean is a data-grounded simulation suite and benchmark for marine robotics, built on a unified ocean-environment dataset and evaluated across core benchmark and external underwater-scene backends.">
   <meta name="keywords" content="marine robotics, underwater robotics, ocean simulation, benchmark, HoloOcean, GEBCO, Copernicus Marine, pollution cleanup, multi-agent systems">
-  <meta name="author" content="Anonymous">
+  <meta name="author" content="Anonymous Submission">
+  <link rel="canonical" href="https://anonymous-2026.github.io/OneOcean/">
   <meta name="robots" content="index, follow">
   <meta property="og:type" content="article">
   <meta property="og:site_name" content="OneOcean">
@@ -27,6 +28,7 @@
   <link rel="stylesheet" href="static/css/bulma.min.css">
   <link rel="stylesheet" href="static/css/index.css">
   <link rel="stylesheet" href="static/css/oneocean.css">
+  <link rel="stylesheet" href="static/css/button-guide.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -49,7 +51,7 @@
               </div>
 
               <div class="is-size-5 publication-authors">
-                <span class="author-block">Anonymous authors</span>
+                <span class="author-block">Anonymous Submission</span>
               </div>
 
               <p class="hero-tagline">
@@ -57,11 +59,15 @@
               </p>
 
               <div class="publication-links oneocean-links">
-                <span class="link-block">
-                  <a href="https://anonymous-2026.github.io/demo" target="_blank" rel="noopener" class="external-link button is-normal is-rounded is-dark">
+                <span class="link-block guided-link">
+                  <a id="online-demo" href="demo/" target="_blank" rel="noopener" aria-describedby="demo-entry-guide" class="external-link button is-normal is-rounded demo-highlight">
                     <span class="icon"><i class="fas fa-play-circle"></i></span>
                     <span>Online Demo</span>
                   </a>
+                  <span id="demo-entry-guide" class="button-guide" role="note">
+                    <span class="guide-heading"><span class="guide-signal" aria-hidden="true"><i></i><i></i><i></i></span>Start here</span>
+                    <span class="guide-copy">Explore the ocean in 3D.</span>
+                  </span>
                 </span>
                 <span class="link-block">
                   <a href="https://github.com/anonymous-2026/OneOcean" target="_blank" rel="noopener" class="external-link button is-normal is-rounded is-dark">
@@ -70,7 +76,7 @@
                   </a>
                 </span>
                 <span class="link-block">
-                  <a href="oneocean_paper.pdf" target="_blank" class="external-link button is-normal is-rounded is-dark">
+                  <a href="oneocean_paper.pdf?v=aaai-21632439d4" target="_blank" class="external-link button is-normal is-rounded is-dark">
                     <span class="icon"><i class="fas fa-file-pdf"></i></span>
                     <span>Paper</span>
                   </a>
@@ -91,12 +97,6 @@
                   <a href="https://huggingface.co/datasets/anonymous321123/OneOcean_Environment_Dataset" target="_blank" rel="noopener" class="external-link button is-normal is-rounded is-dark">
                     <span class="icon"><i class="fas fa-box-open"></i></span>
                     <span>Hugging Face</span>
-                  </a>
-                </span>
-                <span class="link-block">
-                  <a href="https://drive.google.com/drive/folders/1EvK_OkdLqaZkPoNPcyibpjaflZ3TATwZ" target="_blank" rel="noopener" class="external-link button is-normal is-rounded is-dark">
-                    <span class="icon"><i class="fas fa-folder-open"></i></span>
-                    <span>Supplementary</span>
                   </a>
                 </span>
               </div>
@@ -131,7 +131,7 @@
           <div class="column is-five-sixths">
             <h2 class="title is-3 has-text-left">Abstract</h2>
             <div class="content">
-              <p class="has-text-justified">Simulation is essential for marine robotics, yet existing platforms often trade off between visually realistic worlds, high-throughput experimentation, and ocean-condition realism grounded in real data. We present OneOcean, a data-grounded simulation suite and benchmark built around a unified spatiotemporal ocean-environment product that harmonizes bathymetry with data-driven currents and tides, with optional pollution fields for cleanup-related evaluation. On top of this environment representation, OneOcean defines a task ladder spanning navigation and station-keeping under currents, waypoint and route following, depth-profile tracking, area scanning, pipeline inspection, and multi-agent coordination, including formation transit, fish protection/patrol (herding), and surface pollution localization, containment, and cleanup. The suite supports multi-agent settings with 2–10 vehicles. Our simulator supports 3–6 DoF vehicle dynamics and produces standardized metrics and reproducible run manifests, enabling consistent aggregation across tasks, difficulties, and scaling settings. Experiments across dataset variants and scenes systematically stress planning and control under realistic, data-driven disturbances and reveal trade-offs among heuristic baselines, behavior-cloning policies, and an LLM-based planner.</p>
+              <p class="has-text-justified">Simulation is essential for marine robotics, yet existing platforms often trade off visual realism, experimental throughput, and ocean conditions derived from real data. We present OneOcean, a data-grounded simulation suite and benchmark that combines bathymetry, currents, and tides in a shared spatiotemporal dataset. Optional pollution fields support pollution-response evaluation. OneOcean defines ten tasks covering navigation, sensing, coordination, and pollution response, with teams of 2–10 vehicles. The simulator supports three to six Degrees of Freedom (DoF) and records standardized metrics and run configurations across tasks, difficulty tiers, and team sizes. Experiments across dataset variants and underwater scenes compare heuristic control, Behavior Cloning (BC), and Large Language Model (LLM)-assisted planning under ocean currents.</p>
             </div>
           </div>
         </div>
@@ -152,8 +152,8 @@
               </div>
               <div class="column is-6">
                 <div class="content overview-copy">
-                  <p class="has-text-justified">OneOcean treats <strong>ocean conditions as a reusable product</strong>. A unified NetCDF environment dataset harmonizes GEBCO bathymetry, Copernicus / GOPAF currents, optional tide terms, and derived masks. The same grounded environment then drives a canonical benchmark suite instead of being tied to a single simulator implementation.</p>
-                  <p class="has-text-justified">The benchmark is executed in two complementary modes. The <strong>core benchmark backend</strong> prioritizes deterministic, high-throughput evaluation with paper-ready outputs. The <strong>external underwater scene backend</strong> reuses packaged underwater scenes while injecting the same data grounded currents, so qualitative scene evidence and quantitative results still share task semantics and provenance. Together, these two backends support reproducible evaluation across navigation, sensing, coordination, and pollution related marine robotics tasks.</p>
+                  <p class="has-text-justified">A unified NetCDF environment dataset harmonizes GEBCO bathymetry, Copernicus / GOPAF currents, optional tide terms, and derived masks. This dataset supplies ocean conditions for the ten-task benchmark in both simulation backends.</p>
+                  <p class="has-text-justified">The <strong>core benchmark backend</strong> runs deterministic benchmark episodes at scale. The <strong>external underwater scene backend</strong> runs the same tasks in packaged underwater scenes using OneOcean currents.</p>
                 </div>
               </div>
             </div>
@@ -161,19 +161,19 @@
               <div class="column is-4">
                 <div class="mini-point">
                   <span class="mini-point-label">Data.</span>
-                  <span class="mini-point-body">Unified ocean environment product with currents, bathymetry, masks, and task grounding metadata.</span>
+                  <span class="mini-point-body">Ocean dataset with currents, bathymetry, masks, and source metadata.</span>
                 </div>
               </div>
               <div class="column is-4">
                 <div class="mini-point">
                   <span class="mini-point-label">Tasks.</span>
-                  <span class="mini-point-body">10 canonical tasks spanning navigation, sensing, coordination, and pollution response scenarios.</span>
+                  <span class="mini-point-body">10 tasks spanning navigation, sensing, coordination, and pollution response.</span>
                 </div>
               </div>
               <div class="column is-4">
                 <div class="mini-point">
                   <span class="mini-point-label">Evaluation.</span>
-                  <span class="mini-point-body">Shared metrics, tiered difficulty, auditable manifests, and support for 2-10 vehicles.</span>
+                  <span class="mini-point-body">Shared metrics, three difficulty tiers, and support for 2-10 vehicles.</span>
                 </div>
               </div>
             </div>
@@ -188,14 +188,14 @@
           <div class="column is-five-sixths">
             <h2 class="title is-3 has-text-left">Method and Benchmark Design</h2>
             <div class="content method-lead">
-              <p class="has-text-justified">OneOcean is organized around a simple contract: treat the ocean environment as a reusable data product, export that product into backend-friendly disturbance signals, and evaluate methods on a canonical task ladder with shared success criteria and logged provenance. The environment product is regenerated for a chosen region, time window, and resolution; the benchmark then reuses the same grounding across fast quantitative experiments and underwater scene deployment.</p>
+              <p class="has-text-justified">OneOcean combines bathymetry and ocean currents in a shared dataset, exports currents to two simulation backends, and evaluates controllers on ten tasks with common metrics. The dataset can be regenerated for a chosen region, time window, and resolution.</p>
             </div>
 
             <div class="columns is-multiline is-variable is-5 benchmark-pillars">
               <div class="column is-4">
                 <article class="hf-card card method-card benchmark-card">
                   <div class="card-content">
-                    <h3 class="title is-5">Environment Product</h3>
+                    <h3 class="title is-5">Ocean Dataset</h3>
                     <p>The data pipeline merges GEBCO bathymetry with Copernicus / GOPAF currents and optional tides into a combined NetCDF environment. Variant exports keep the schema fixed while changing coverage and resolution for tiny, scene, and public releases.</p>
                   </div>
                 </article>
@@ -204,22 +204,22 @@
                 <article class="hf-card card method-card benchmark-card">
                   <div class="card-content">
                     <h3 class="title is-5">Two Backends</h3>
-                    <p>The core benchmark backend provides deterministic, high-throughput rollouts and paper-ready tables. The external underwater scene backend reuses packaged underwater scenes while injecting the same OneOcean current signals for transfer and qualitative evidence.</p>
+                    <p>The core backend runs task and difficulty sweeps. The external backend runs tasks in packaged underwater scenes using exported OneOcean currents.</p>
                   </div>
                 </article>
               </div>
               <div class="column is-4">
                 <article class="hf-card card method-card benchmark-card">
                   <div class="card-content">
-                    <h3 class="title is-5">Evaluation Contract</h3>
-                    <p>Tasks share tiered difficulty, standardized success and efficiency metrics, and auditable run manifests. The simulator supports 3–6 DoF dynamics, while the quantitative study uses the 6DoF setting with recorded constraints and dataset grounding.</p>
+                    <h3 class="title is-5">Evaluation Protocol</h3>
+                    <p>Tasks use three difficulty tiers and report success, efficiency, and task-specific progress. The simulator supports 3–6 DoF dynamics; the quantitative study uses the 6DoF setting. Run records include the configuration and dataset indices.</p>
                   </div>
                 </article>
               </div>
             </div>
 
             <div class="task-families-wrap">
-              <h3 class="title is-4 has-text-left">Canonical task families</h3>
+              <h3 class="title is-4 has-text-left">Task Families</h3>
               <div class="columns is-multiline is-variable is-5 task-family-grid task-family-grid-three">
                 <div class="column is-4">
                   <div class="task-family-card family-card">
@@ -236,7 +236,7 @@
                 <div class="column is-4">
                   <div class="task-family-card family-card">
                     <h4>Coordination and Pollution</h4>
-                    <p>Formation Transit (FT), Surface Pollution Cleanup (SPC), Underwater Pollution Lift (UPL), and Fish Herding (FH) emphasize team-size scaling, constraint satisfaction, localization, containment, and cleanup.</p>
+                    <p>Formation Transit (FT), Surface Pollution Cleanup (SPC), Underwater Pollution Lift (UPL), and Fish Protection / Herding (FH) emphasize team-size scaling, constraint satisfaction, localization, containment, and cleanup.</p>
                   </div>
                 </div>
               </div>
@@ -252,37 +252,34 @@
           <div class="column is-five-sixths">
             <h2 class="title is-3 has-text-left">What the results show</h2>
             <div class="content">
-              <p class="has-text-justified">The paper claim is not “a few highlighted numbers are larger.” The point of the benchmark is that it stays <strong>non-saturated</strong>, reuses the same environment grounding across backends, and exposes complementary failure modes in navigation, coordination, and pollution-response tasks. The tables below are organized as evidence for those benchmark-design claims.</p>
-              <p class="has-text-justified"><strong>Heuristic</strong> denotes the deterministic task-specific controller used as the strongest built-in baseline. <strong>BC</strong> is a behavior-cloning policy trained to imitate heuristic actions. <strong>LLM planners</strong> produce high-level decisions such as assignments or waypoint choices, while deterministic low-level control and safety checks remain unchanged. <strong>Highlighted entries</strong> indicate column-best values only and should be read together with the claim summaries and captions, not as a standalone leaderboard.</p>
+              <p class="has-text-justified">The benchmark compares navigation, sensing, and coordination across task difficulties and simulation backends.</p>
+              <p class="has-text-justified"><strong>Heuristic</strong> denotes the deterministic task-specific baseline. <strong>Behavior Cloning (BC)</strong> is trained to imitate heuristic actions. <strong>LLM planners</strong> select source assignments or waypoints; all LLM runs use the same low-level controller and safety checks. <strong>Highlighted entries</strong> indicate the best value in each column.</p>
             </div>
 
             <div class="columns is-multiline is-variable is-4 results-takeaway-grid">
               <div class="column is-4">
                 <article class="results-takeaway-card">
-                  <h3>Benchmark discrimination</h3>
-                  <p>Tier 2 is usable for routine comparisons, while Tier 3 still separates methods instead of collapsing into all-success or all-failure behavior.</p>
+                  <h3>Success across difficulty tiers</h3>
+                  <p>Across ten tasks, heuristic success decreases from 84.6% at Tier 2 to 29.0% at Tier 3; BC decreases from 58.6% to 6.0%.</p>
                 </article>
               </div>
               <div class="column is-4">
                 <article class="results-takeaway-card">
-                  <h3>Shared environment grounding</h3>
-                  <p>The same data product drives both quantitative runs and scene-backed deployment, so media and tables describe the same disturbances and task semantics.</p>
+                  <h3>Shared ocean data</h3>
+                  <p>Both backends use currents exported from the same ocean dataset and share task definitions.</p>
                 </article>
               </div>
               <div class="column is-4">
                 <article class="results-takeaway-card">
-                  <h3>Different failure modes matter</h3>
-                  <p>Navigation, inspection, and pollution-response tasks stress different weaknesses, which is why the suite is useful for judging model quality instead of one-off task tuning.</p>
+                  <h3>Task-specific challenges</h3>
+                  <p>Navigation tests disturbance rejection, inspection tests coverage and detection, and pollution response tests assignment and coordination.</p>
                 </article>
               </div>
             </div>
 
             <div class="table-panel">
-              <div class="results-evidence-note">
-                <strong>Evidence 1.</strong> The suite stays discriminative instead of saturating: Tier 2 remains usable for routine comparison, while Tier 3 still exposes meaningful gaps in robustness, coordination, and completion quality.
-              </div>
               <h3 class="title is-4 has-text-left">Core benchmark headline results</h3>
-              <p class="table-caption">Macro results over the 10-task suite plus Tier 3 key-task metrics. Higher is better for success, coverage, inspection score, and cleanup rate; lower is better for energy and collision ratio. Highlighting marks the best number in a column, but the benchmark-level takeaway is the spread between Tier 2 and Tier 3.</p>
+              <p class="table-caption">Macro results over the 10-task suite plus Tier 3 key-task metrics. Higher is better for success, coverage, inspection score, and cleanup rate; lower is better for the action-energy proxy E and collision ratio.</p>
               <div class="table-scroll">
                 <table class="paper-table compact">
                   <thead>
@@ -343,7 +340,7 @@
                 <figure class="image hf-figure">
                   <img class="hf-media hf-plot" src="static/images/paper/difficulty_ladder_dualpanel.png" alt="Difficulty ladder summary" loading="lazy">
                 </figure>
-                <p class="hf-caption">Difficulty ladder summary on representative tasks. Tier 3 remains strongly discriminative instead of saturating.</p>
+                <p class="hf-caption">Success rates across difficulty tiers on representative tasks.</p>
               </div>
               <div class="column is-6">
                 <figure class="image hf-figure">
@@ -354,11 +351,8 @@
             </div>
 
             <div class="table-panel">
-              <div class="results-evidence-note">
-                <strong>Evidence 2.</strong> Planning-sensitive tasks remain informative under shared low-level control: once the disturbance model and safety checks are fixed, high-level decisions still materially change cleanup, inspection, and efficiency outcomes.
-              </div>
               <h3 class="title is-4 has-text-left">Planning-sensitive tasks: heuristic, BC, and LLM planners</h3>
-              <p class="table-caption">Tier 2 planning suite under stronger currents. The LLM planner provides high-level assignments or waypoint choices; low-level control and safety checks remain deterministic. Read this table as method separation under a shared execution contract, not as an isolated ranking board.</p>
+              <p class="table-caption">Tier 2 planning results under stronger currents. LLMs select source assignments or waypoints; all LLM runs use the same low-level controller and safety checks.</p>
               <div class="table-scroll">
                 <table class="paper-table">
                   <thead>
@@ -479,7 +473,7 @@
 
             <div class="table-panel">
               <h3 class="title is-4 has-text-left">External underwater scene transfer</h3>
-              <p class="table-caption">Route-following after moving the same task semantics into four packaged underwater scenes with OneOcean current injection. This table is included for transfer evidence, so the scene-to-scene spread matters more than per-cell highlighting.</p>
+              <p class="table-caption">Route-following results across four underwater scenes using currents exported from OneOcean.</p>
               <div class="table-scroll narrow">
                 <table class="paper-table compact">
                   <thead>
@@ -558,7 +552,7 @@
           <div class="column is-five-sixths">
             <h2 class="title is-3 has-text-left">Demos</h2>
             <div class="content">
-              <p class="has-text-justified">The core backend provides compact, reproducible task renderings, while the external scene backend shows that the same OneOcean tasks can be deployed in richer underwater scenes. The media below are representative examples from both ends of the suite.</p>
+              <p class="has-text-justified">Task demonstrations from the core and underwater-scene backends.</p>
             </div>
 
             <h3 class="title is-4 has-text-left">Core benchmark examples</h3>
@@ -572,7 +566,7 @@
                   </div>
                   <div class="card-content">
                     <h4 class="title is-5">Fish Protection / Herding</h4>
-                    <p>Representative multi-agent execution in the core benchmark backend under the same data grounded disturbance model used by the quantitative study.</p>
+                    <p>Multi-agent fish herding under ocean currents.</p>
                   </div>
                 </article>
               </div>
@@ -585,7 +579,7 @@
                   </div>
                   <div class="card-content">
                     <h4 class="title is-5">Formation Transit</h4>
-                    <p>Multi-agent formation behavior from the core backend, illustrating how OneOcean evaluates coordination under drift and team-size constraints.</p>
+                    <p>Multi-agent formation transit under ocean currents.</p>
                   </div>
                 </article>
               </div>
@@ -611,7 +605,7 @@
                   </div>
                   <div class="card-content">
                     <h4 class="title is-5">PierHarbor Plume Localization</h4>
-                    <p>Localization under drifting plume observations, showing that pollution-related task semantics survive transfer to external scenes.</p>
+                    <p>Plume-source localization in PierHarbor.</p>
                   </div>
                 </article>
               </div>
@@ -622,7 +616,7 @@
                   </div>
                   <div class="card-content">
                     <h4 class="title is-5">OpenWater Formation Deployment</h4>
-                    <p>Multi-agent formation deployment in an underwater scene, illustrating portability beyond the high-throughput benchmark backend.</p>
+                    <p>Formation transit in OpenWater.</p>
                   </div>
                 </article>
               </div>

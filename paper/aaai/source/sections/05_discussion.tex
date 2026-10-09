@@ -1,0 +1,8 @@
+\section{Discussion}
+\label{sec:discussion}
+
+\revise{Heuristic control achieves higher macro success than BC across the ten-task suite, while BC performs well on Underwater Pollution Lift and Fish Protection / Herding at Tier 2. Stronger currents and tighter task requirements expose failures in sustained tracking and coordination. LLM performance varies across tasks and evaluation sweeps, with latency and token usage adding to the cost of planning.}
+
+\revise{Task-specific progress, command effort, collision exposure, and completion time complement binary success. The planner diagnostics connect task outcomes to plan validity and fallback behavior. Valid assignments can yield poor trajectories or repeated coverage, while invalid calls invoke the deterministic allocator. These observations emphasize the role of closed-loop execution when evaluating high-level planning.}
+
+\revise{The external experiments show scene-dependent route-following performance under the shared task definitions. Core episodes use fixed current slices, while scene episodes use temporal forcing and scene-specific geometry. Recording these settings supports comparisons across environments and helps identify which conditions challenge a controller.}

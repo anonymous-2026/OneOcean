@@ -1,0 +1,50 @@
+\section{Additional External-Backend Diagnostics}
+\label{app:external_diagnostics}
+
+The external pollution study compares an analytic advected Gaussian probe with OCPNet-3D in Dam, OpenWater, PierHarbor, and SimpleUnderwater. Each combination of scene, model, and current setting uses three localization episodes; Table~\ref{tab:app_pollution_localization} therefore aggregates 12 episodes per row.
+
+\begin{table}[t]
+\centering
+\scriptsize
+\setlength{\tabcolsep}{2pt}
+\renewcommand{\arraystretch}{1.10}
+\begin{tabularx}{\columnwidth}{@{}l l *{4}{Y}@{}}
+\toprule
+\textbf{Scale} & \textbf{Probe} & \textbf{$N$} & \makecell{\textbf{SR}\\\textbf{(\%)}} & \makecell{\textbf{Error}\\\textbf{(m)}} & \makecell{\textbf{$\Delta$ error}\\\textbf{(m)}} \\
+\midrule
+1.0 & Analytic & 12 & 41.7 & 25.93 & 0.00 \\
+1.0 & OCPNet-3D & 12 & 50.0 & 20.81 & $-5.12$ \\
+2.5 & Analytic & 12 & 50.0 & 26.00 & 0.00 \\
+2.5 & OCPNet-3D & 12 & 50.0 & 22.64 & $-3.36$ \\
+\bottomrule
+\end{tabularx}
+\caption{Pollution-localization diagnostic over four scenes (12 episodes per row). $\Delta$ error is measured against the analytic probe at the same current scale.}
+\label{tab:app_pollution_localization}
+\end{table}
+
+OCPNet-3D lowers mean localization error by 5.12\,m at nominal current and 3.36\,m under stronger current, while matching or improving aggregate success. Containment quantities are reported separately for each field model: the analytic field tracks a remaining-mass state, while OCPNet tracks grid mass. Table~\ref{tab:app_external_scaling} reports removed mass for the analytic-field team-size sweep.
+
+\subsection{Scene-backed cleanup scaling}
+
+\begin{table}[!ht]
+\centering
+\scriptsize
+\setlength{\tabcolsep}{5pt}
+\renewcommand{\arraystretch}{1.08}
+\begin{tabular}{r r r r}
+\toprule
+\textbf{Agents} & \textbf{Episodes} & \textbf{SR (\%)} & \makecell{\textbf{Removed mass}\\\textbf{(kg)}} \\
+\midrule
+2 & 20 & 40.0 & 0.2081 \\
+4 & 20 & 100.0 & 0.4302 \\
+8 & 20 & 100.0 & 0.4817 \\
+10 & 20 & 100.0 & 0.4886 \\
+\bottomrule
+\end{tabular}
+\caption{Analytic-containment scaling at nominal current, aggregated over OpenWater and PierHarbor with ten episodes per scene and team size.}
+\label{tab:app_external_scaling}
+\end{table}
+
+Increasing the team from two to four agents raises aggregate success from 40\% to 100\% and approximately doubles removed mass. The smaller gains from four to ten agents indicate saturation under the fixed 15\,s containment horizon.
+
+The route and pollution results show variation across underwater scenes. Each external-backend run records the scene, current scale, dataset clock, controller settings, and observation model.

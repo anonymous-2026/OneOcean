@@ -1,0 +1,94 @@
+\section{Metrics and Reproducibility Protocol}
+\label{app:protocol}
+
+\begin{table*}[t]
+\centering
+\scriptsize
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.08}
+\begin{tabularx}{\textwidth}{l l l X}
+\toprule
+\textbf{Diagnostic} & \textbf{Budget} & \textbf{Configuration} & \textbf{Purpose} \\
+\midrule
+Planner diagnostic & 3 seeds per task and method & 72 episodes; stride 200; 96-token cap & Validity, fallback, completion, and failure diagnosis. \\
+Dynamics diagnostic & 20 episodes per task and difficulty & 10 tasks; medium and hard; three dynamics modes & Sensitivity to vehicle dynamics. \\
+Current-gain sweep & 5 seeds per task and method & 300 episodes; hard; 10 tasks; $g\in\{0,1,2\}$ & Data-current disturbance sensitivity. \\
+Synthetic-tide stress & 10 seeds per task and method & 200 episodes; hard; 10 tasks; 0.45\,m\,s$^{-1}$ amplitude & Periodic-disturbance sensitivity. \\
+External pollution diagnostic & 3 episodes per scene and configuration & Four scenes; two currents; two field models & Localization-model comparison. \\
+External scaling & 10 episodes per scene and team size & 80 episodes; two scenes; $N\in\{2,4,8,10\}$ & Scene-backed team-size sensitivity. \\
+\bottomrule
+\end{tabularx}
+\caption{Budgets for supplementary diagnostic studies. Headline experiment budgets remain attached to their result tables in the main paper.}
+\label{tab:app_protocol_budgets}
+\end{table*}
+
+\subsection{Metric definitions}
+
+The main paper defines Success Rate (SR), timeout-aware episode time $T$, and the action-energy proxy $E$. The additional team-level aggregate used in the result tables is the near-collision ratio
+\begin{equation}
+\mathrm{Coll}=\frac{1}{T_{\mathrm{ep}}}\sum_{t=1}^{T_{\mathrm{ep}}}\mathbf 1\!\left[\min_{i<j}\|p_t^{(i)}-p_t^{(j)}\|_2\le r_{\mathrm{coll}}\right].
+\end{equation}
+Task-specific metrics follow the definitions in Appendix Sec.~\ref{app:tasks}.
+
+\subsection{Episode and task aggregation}
+
+For task $k$ with $M_k$ episodes, let $s_{ke}\in\{0,1\}$ indicate success and $H_{ke}$ the timeout in seconds. The reported success rate and timeout-aware duration are
+\begin{align}
+\mathrm{SR}_k&=\frac{1}{M_k}\sum_e s_{ke},\\
+T_k&=\frac{1}{M_k}\sum_e\left[s_{ke}t_{ke}^{\rm succ}
+                         +(1-s_{ke})H_{ke}\right],
+\end{align}
+where $t_{ke}^{\rm succ}$ is the success time for a completed episode. The success-only duration, when reported separately, averages $t^{\rm succ}$ over successful episodes and is undefined if none succeeds.
+
+An episode's action-energy proxy sums over both agents and executed steps:
+\begin{equation}
+E_{ke}=\Delta t\sum_{n=0}^{L_{ke}-1}\sum_{i=1}^{N}
+                   \|\Pi_v(a_{i,n})\|_2^2.
+\end{equation}
+Here $L_{ke}$ is the executed step count. The proxy uses clipped commands. The near-collision ratio above uses one indicator per step, even if several agent pairs are close in that step; tables expressed in percent multiply this ratio by 100.
+
+Station error is accumulated after each motion update. Writing $\bar d_n=N^{-1}\sum_i\|p_i^n-p_g\|_2$, its episode RMS is $[L^{-1}\sum_n\bar d_n^2]^{1/2}$. The route-tracking diagnostic analogously averages distance to the active waypoint across agents and time. It measures the waypoint-target error associated with the current route stage. For an overall success rate across $K$ tasks, the macro-average is $K^{-1}\sum_k\mathrm{SR}_k$, which gives every task equal weight. With equal episode counts this also equals the pooled episode success rate. Task-specific metrics retain their original units and are averaged within each task and configuration.
+
+\subsection{Controller observations and decisions}
+
+The heuristic, BC, and LLM-assisted controllers share the action interpretation and the motion update in Appendix Sec.~\ref{app:models_ros}. Heuristics track task targets, BC maps observations to velocity, and the LLM selects discrete task decisions.
+
+\paragraph{Goal-directed control.}
+For an assigned target $q_i$, the proportional controller produces
+\begin{equation}
+a_i=\Pi_v\!\left(k_p(q_i-p_i)\right).
+\end{equation}
+The navigation gain is $k_p=0.9$ and the station-keeping gain is $0.8$. Intermediate targets come from the task state: the active waypoint, assigned source, formation offset, or stage of a coordinated task. This controller corrects positional error at each step under the applied current. The pollution-localization heuristic additionally uses the agents' scalar probes to estimate a horizontal concentration gradient and coordinate exploration around the highest observed concentration.
+
+\paragraph{Behavior Cloning.}
+The observation for each training example is
+\begin{equation}
+o_i=[(q_i-p_i)^\top,\ y_i,\ C(p_i),\ c_{i,x},\ c_{i,z},\ e_k^\top]^\top,
+\end{equation}
+where $e_k$ is a one-hot task indicator. It contains seven continuous features followed by the task encoding. The policy is a multilayer perceptron with two ReLU hidden layers and a three-dimensional linear output. Feature and action means and standard deviations are estimated on the training split. With $\widehat o$ and $\widehat a$ denoting standardized values, the learning objective is
+\begin{equation}
+\mathcal L_{\rm BC}(\theta)=\frac{1}{3M}\sum_{m=1}^{M}
+            \|f_\theta(\widehat o_m)-\widehat a_m\|_2^2.
+\end{equation}
+AdamW minimizes this objective. At inference the output is transformed back to action units and projected onto the permitted speed ball. The reference training configuration uses hidden widths $(64,64)$, 12 epochs, batch size 4096, learning rate $10^{-3}$, zero weight decay, and a randomly selected 10\% validation split; the trained checkpoint records its configuration and normalization statistics.
+
+Demonstrations align the recorded command with its task target and local observations. The trajectory converter retains steps with a recorded target. For the kinematic recording convention, which stores the post-step position, it reconstructs the corresponding pre-step position as $p_n=p_{n+1}-\Delta t(a_n+c_n)$ before forming the target displacement.
+
+\paragraph{LLM-assisted planning.}
+At a planning event, the task state is summarized by the task identifier, step, team size, agent positions, and the relevant source or waypoint state. Coordinates are rounded to two decimal places. The planner returns discrete source assignments or waypoint choices, which are checked for admissible indices and task state before use. The task controller then tracks the resulting targets using the same bounded velocity control. Between planning events the current decisions remain active. Failed or invalid responses invoke the task's deterministic fallback. The diagnostic in Appendix Sec.~\ref{app:core_diagnostics} separates decision validity, fallback frequency, task completion, and inference cost, to characterize discrete planning within the closed-loop episode.
+
+\subsection{Supplementary diagnostic budgets}
+
+
+
+Table~\ref{tab:app_protocol_budgets} lists the supplementary diagnostic budgets and varied factors. Each study records its tier presets, controller settings, dataset indices, and environment provenance. Dataset validation and ROS interface checks are reported separately.
+
+\subsection{Compute and run manifests}
+
+The main paper reports the compute platform. For provenance, each run stores an integer seed, normalized configuration, task and dynamics specification snapshots, environment-product indices, software and Git state, episode metrics, and recorder streams. Aggregation scripts regenerate comma-separated-value and Markdown result tables from the recorded episode metrics.
+
+
+\subsection{Extension priorities}
+\label{app:limitations}
+
+Future extensions include measured three-dimensional flow, vehicle coupling identified through Computational Fluid Dynamics (CFD) or system identification, validated pollutant transport, and ROS-in-the-loop experiments. New controllers, vehicles, and backends use the shared environment queries, declare termination conditions and metrics, and record configurations and dataset indices. They preserve the existing constraint checks and reporting formats.

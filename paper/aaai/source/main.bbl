@@ -1,0 +1,205 @@
+\begin{thebibliography}{29}
+\providecommand{\natexlab}[1]{#1}
+
+\bibitem[{{\'A}lvarez-Tu{\~n}{\'o}n et~al.(2023){\'A}lvarez-Tu{\~n}{\'o}n,
+  Amer, Ugurlu et~al.}]{MIMIRUW}
+{\'A}lvarez-Tu{\~n}{\'o}n, O.; Amer, A.; Ugurlu, H.~I.; et~al. 2023.
+\newblock {MIMIR-UW: A Multipurpose Synthetic Dataset for Underwater Navigation
+  and Inspection}.
+\newblock Zenodo.
+
+\bibitem[{Chu et~al.(2025)Chu, Huang, Li, Lin, Carlucho, Petillot, and
+  Yang}]{MarineGym}
+Chu, S.; Huang, Z.; Li, Y.; Lin, M.; Carlucho, I.; Petillot, Y.~R.; and Yang,
+  C. 2025.
+\newblock {{MarineGym}}: {{A High-Performance Reinforcement Learning Platform}}
+  for {{Underwater Robotics}}.
+
+\bibitem[{{Copernicus Marine Environment Monitoring Service
+  (CMEMS)}(2025)}]{CopernicusGOPAF2025}
+{Copernicus Marine Environment Monitoring Service (CMEMS)}. 2025.
+\newblock {Global Ocean Physics Analysis and Forecast}.
+\newblock \url{https://data.marine.copernicus.eu/}.
+\newblock Accessed: 2025-09-07.
+
+\bibitem[{{Copernicus Marine Service}(2024)}]{copernicus}
+{Copernicus Marine Service}. 2024.
+\newblock {Copernicus Marine Service: Ocean Monitoring and Forecasting}.
+
+\bibitem[{Dagestad, R{\"o}hrs et~al.(2018)}]{opendrift}
+Dagestad, K.-F.; R{\"o}hrs, J.; et~al. 2018.
+\newblock {OpenDrift v1.0: a generic framework for trajectory modelling}.
+\newblock \emph{Geoscientific Model Development}, 11(4): 1405--1420.
+
+\bibitem[{Dal~Fabbro et~al.(2026)Dal~Fabbro, Mesbahi, Mendes, Borges~de Sousa,
+  and Pappas}]{DouroMARL2026}
+Dal~Fabbro, N.; Mesbahi, M.; Mendes, R.; Borges~de Sousa, J.; and Pappas, G.~J.
+  2026.
+\newblock {Long-Term Mapping of the Douro River Plume with Multi-Agent
+  Reinforcement Learning}.
+\newblock In \emph{Proc.~IEEE International Conference on Robotics and
+  Automation (ICRA)}.
+
+\bibitem[{Delandmeter and {van Sebille}(2019)}]{parcels}
+Delandmeter, P.; and {van Sebille}, E. 2019.
+\newblock {The {{Parcels}} v2.0 {{Lagrangian}} Framework: New Field
+  Interpolation Schemes}.
+\newblock \emph{Geoscientific Model Development}, 12(8): 3571--3584.
+
+\bibitem[{Embley-Riches et~al.(2026)Embley-Riches, Liu, Julier, and
+  Kanoulas}]{URLab2026}
+Embley-Riches, J.; Liu, J.; Julier, S.; and Kanoulas, D. 2026.
+\newblock {Unreal Robotics Lab: A High-Fidelity Robotics Simulator with
+  Advanced Physics and Rendering}.
+\newblock In \emph{Proc.~IEEE International Conference on Robotics and
+  Automation (ICRA)}.
+
+\bibitem[{Fu et~al.(2026)Fu, Yu, El-Refai, Kou, Xue, Huang, Xiao, Wang, Niu,
+  Li, Shi, Wu, Sastry, Zhu, Goldberg, and Fan}]{CaPX2026}
+Fu, L.; Yu, J.; El-Refai, K.; Kou, E.; Xue, H.; Huang, H.; Xiao, W.; Wang, G.;
+  Niu, D.; Li, F.-F.; Shi, G.; Wu, J.; Sastry, S.; Zhu, Y.; Goldberg, K.; and
+  Fan, L. 2026.
+\newblock {CaP-X: A Framework for Benchmarking and Improving Coding Agents for
+  Robot Manipulation}.
+\newblock In \emph{Proc.~International Conference on Machine Learning (ICML)}.
+
+\bibitem[{{GEBCO Compilation Group}(2025)}]{GEBCO2025}
+{GEBCO Compilation Group}. 2025.
+\newblock The {GEBCO} 2025 Grid -- A Global 15 Arc-Second Bathymetry Dataset.
+
+\bibitem[{{HYCOM Consortium for Data-Assimilative Ocean
+  Modeling}(2024)}]{hycom}
+{HYCOM Consortium for Data-Assimilative Ocean Modeling}. 2024.
+\newblock {HYCOM: Hybrid Coordinate Ocean Model}.
+
+\bibitem[{Jangir et~al.(2026)Jangir, Zhang, Lo, Yamazaki, Zhang, Tu, Ke, Ke,
+  Bisk, and Fragkiadaki}]{RobotArena2026}
+Jangir, Y.; Zhang, Y.; Lo, P.-C.; Yamazaki, K.; Zhang, C.; Tu, K.-H.; Ke,
+  T.-W.; Ke, L.; Bisk, Y.; and Fragkiadaki, K. 2026.
+\newblock {RobotArena $\infty$: Scalable Robot Benchmarking via Real-to-Sim
+  Translation}.
+\newblock In \emph{Proc.~International Conference on Learning Representations
+  (ICLR)}.
+
+\bibitem[{Koenig and Howard(2004)}]{Gazebo}
+Koenig, N.; and Howard, A. 2004.
+\newblock {Design and Use Paradigms for Gazebo, An Open-Source Multi-Robot
+  Simulator}.
+\newblock In \emph{Proc.~IEEE/RSJ International Conference on Intelligent
+  Robots and Systems (IROS)}.
+
+\bibitem[{Lesser et~al.(2004)Lesser, Roelvink, van Kester, and
+  Stelling}]{delft3d}
+Lesser, G.~R.; Roelvink, J.~A.; van Kester, J. A. T.~M.; and Stelling, G.~S.
+  2004.
+\newblock {Development and validation of a three-dimensional morphological
+  model}.
+\newblock \emph{Coastal Engineering}, 51(8-9): 883--915.
+
+\bibitem[{Lon{\v c}ar et~al.(2022)Lon{\v c}ar, Obradovi{\'c}, Kra{\v s}evac,
+  Mandi{\'c}, Kvasi{\'c}, Ferreira, Slo{\v s}i{\'c}, Na{\dj}, and Mi{\v
+  s}kovi{\'c}}]{MARUS}
+Lon{\v c}ar, I.; Obradovi{\'c}, J.; Kra{\v s}evac, N.; Mandi{\'c}, L.;
+  Kvasi{\'c}, I.; Ferreira, F.; Slo{\v s}i{\'c}, V.; Na{\dj}, {\DJ}.; and Mi{\v
+  s}kovi{\'c}, N. 2022.
+\newblock {{MARUS}} - {{A Marine Robotics Simulator}}.
+\newblock In \emph{{{OCEANS}} 2022, {{Hampton Roads}}}.
+
+\bibitem[{Madec and the NEMO~Team(2019)}]{nemo}
+Madec, G.; and the NEMO~Team. 2019.
+\newblock {NEMO Ocean Engine}.
+\newblock \emph{Note du Pôle de modélisation de l'Institut Pierre-Simon
+  Laplace (IPSL)}.
+\newblock No. 27.
+
+\bibitem[{Makoviychuk et~al.(2021)Makoviychuk, Wawrzyniak, Guo, Lu, Storey,
+  Macklin, Hoeller, Rudin, Allshire, Handa, and State}]{IsaacSim}
+Makoviychuk, V.; Wawrzyniak, L.; Guo, Y.; Lu, M.; Storey, K.; Macklin, M.;
+  Hoeller, D.; Rudin, N.; Allshire, A.; Handa, A.; and State, G. 2021.
+\newblock Isaac Gym: High Performance GPU-Based Physics Simulation For Robot
+  Learning.
+\newblock \emph{CoRR}, abs/2108.10470.
+
+\bibitem[{Manhães et~al.(2016)Manhães, Scherer, Voss, Douat, and
+  Stein}]{UUVSim}
+Manhães, M.; Scherer, S.; Voss, M.; Douat, L.; and Stein, F. 2016.
+\newblock {UUV Simulator: A Gazebo-based Package for Underwater Intervention
+  and Multi-Robot Simulation}.
+\newblock In \emph{Proc.~2016 IEEE/OES Autonomous Underwater Vehicles (AUV)}.
+
+\bibitem[{Prats et~al.(2012)Prats, Perez, Fernandez, and Sanz}]{UWSim}
+Prats, M.; Perez, J.; Fernandez, J.~J.; and Sanz, P.~J. 2012.
+\newblock {An Open Source Tool for Simulation and Supervision of Underwater
+  Intervention Missions}.
+\newblock In \emph{Proc.~2012 {{IEEE}}/{{RSJ International Conference}} on
+  {{Intelligent Robots}} and {{Systems}}}.
+
+\bibitem[{Pshenitsyn, Panov, and Skrynnik(2026)}]{CAMAR2026}
+Pshenitsyn, A.; Panov, A.; and Skrynnik, A. 2026.
+\newblock {CAMAR: Continuous Actions Multi-Agent Routing}.
+\newblock In \emph{Proc.~AAAI Conference on Artificial Intelligence},
+  volume~40, 29651--29659.
+
+\bibitem[{Romrell et~al.(2025)Romrell, Austin, Meyers et~al.}]{HoloOcean2}
+Romrell, B.; Austin, A.; Meyers, B.; et~al. 2025.
+\newblock {A Preview of HoloOcean 2.0}.
+\newblock arXiv:2510.06160.
+
+\bibitem[{Ruediger and Banerjee(2026)}]{MapTIDAL2026}
+Ruediger, M.; and Banerjee, A.~G. 2026.
+\newblock {Mapping-Guided Task Discovery and Allocation for Robotic Inspection
+  of Underwater Structures}.
+\newblock In \emph{Proc.~IEEE International Conference on Robotics and
+  Automation (ICRA)}.
+
+\bibitem[{Shchepetkin and McWilliams(2005)}]{roms}
+Shchepetkin, A.~F.; and McWilliams, J.~C. 2005.
+\newblock {The Regional Oceanic Modeling System (ROMS): A Split-Explicit,
+  Free-Surface, Topography-Following-Coordinate Oceanic Model}.
+\newblock \emph{Ocean Modelling}, 9(4): 347--404.
+
+\bibitem[{Song et~al.(2025)Song, Ma, Bagoren, Sethuraman, Zhang, and
+  Skinner}]{OceanSim}
+Song, J.; Ma, H.; Bagoren, O.; Sethuraman, A.~V.; Zhang, Y.; and Skinner, K.~A.
+  2025.
+\newblock {{OceanSim}}: {{A GPU-Accelerated Underwater Robot Perception
+  Simulation Framework}}.
+
+\bibitem[{Strobach et~al.(2018)Strobach, Molod, Forget, Campin, Hill,
+  Menemenlis, and Heimbach}]{MITgcm}
+Strobach, E.; Molod, A.; Forget, G.; Campin, J.-M.; Hill, C.; Menemenlis, D.;
+  and Heimbach, P. 2018.
+\newblock {Consequences of Different Air-Sea Feedbacks on Ocean Using
+  {{MITgcm}} and {{MERRA-2}} Forcing: {{Implications}} for Coupled Data
+  Assimilation Systems}.
+\newblock \emph{Ocean Modelling}, 132: 91--111.
+
+\bibitem[{Wu et~al.(2026)Wu, Modi, Mavrogiannis, Joshi, Chopra, Aloimonos,
+  Karapetyan, Rekleitis, and Lin}]{DREAM2026}
+Wu, Z.; Modi, A.; Mavrogiannis, A.; Joshi, K.; Chopra, N.; Aloimonos, Y.;
+  Karapetyan, N.; Rekleitis, I.; and Lin, X. 2026.
+\newblock {DREAM: Domain-Aware Reasoning for Efficient Autonomous Underwater
+  Monitoring}.
+\newblock In \emph{Proc.~IEEE International Conference on Robotics and
+  Automation (ICRA)}.
+
+\bibitem[{Xue et~al.(2025)Xue, Mao, Ru et~al.}]{OceanGym}
+Xue, Y.; Mao, M.; Ru, X.; et~al. 2025.
+\newblock {OceanGym: A Benchmark Environment for Underwater Embodied Agents}.
+\newblock arXiv:2509.26536.
+
+\bibitem[{Zereik et~al.(2018)Zereik, Bibuli, Mi{\v s}kovi{\'c}, Ridao, and
+  Pascoal}]{Trends_Marine_Robotics}
+Zereik, E.; Bibuli, M.; Mi{\v s}kovi{\'c}, N.; Ridao, P.; and Pascoal, A. 2018.
+\newblock {Challenges and Future Trends in Marine Robotics}.
+\newblock \emph{Annual Reviews in Control}, 46: 350--368.
+
+\bibitem[{Zhang et~al.(2022)Zhang, Choi, Herman, Davis, Vogt, McCarrin, Vijay,
+  Dutia, Lew, Peters, and Bingham}]{DAVE}
+Zhang, M.~M.; Choi, W.-S.; Herman, J.; Davis, D.; Vogt, C.; McCarrin, M.;
+  Vijay, Y.; Dutia, D.; Lew, W.; Peters, S.; and Bingham, B. 2022.
+\newblock {DAVE Aquatic Virtual Environment: Toward a General Underwater
+  Robotics Simulator}.
+\newblock arXiv:2209.02862.
+
+\end{thebibliography}

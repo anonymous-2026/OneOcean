@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="example/logo.png">
+    <title>OneOcean UUV Demo - All Tasks</title>
+    <style>
+        :root {
+            --bg: #041a27;
+            --panel: rgba(7, 34, 49, 0.9);
+            --panel-strong: rgba(9, 41, 59, 0.96);
+            --border: rgba(122, 175, 205, 0.24);
+            --border-active: #80f1ff;
+            --text: #e8f6ff;
+            --muted: #a8c7d8;
+            --accent: #6f5cff;
+        }
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background:
+                radial-gradient(circle at top left, rgba(63, 110, 150, 0.18), transparent 28%),
+                radial-gradient(circle at top right, rgba(111, 92, 255, 0.12), transparent 26%),
+                linear-gradient(180deg, #072538 0%, var(--bg) 48%, #03131d 100%);
+            color: var(--text);
+            font-family: Verdana, Geneva, sans-serif;
+        }
+        .top-btn {
+            position: fixed;
+            right: 20px;
+            z-index: 210;
+            min-width: 172px;
+            padding: 10px 16px;
+            background: #6f5cff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-family: Verdana, Geneva, sans-serif;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+            text-align: center;
+        }
+        #btn-open-tasks { top: 20px; }
+        #btn-open-index { top: 68px; }
+        .layout {
+            min-height: 100vh;
+            display: grid;
+            grid-template-rows: 1fr auto;
+            gap: 14px;
+            padding: 16px;
+        }
+        .task-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 14px;
+            min-height: 0;
+        }
+        .task-card {
+            position: relative;
+            min-height: 250px;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 2px solid var(--border);
+            background: linear-gradient(180deg, rgba(9, 35, 49, 0.84), rgba(5, 24, 35, 0.94));
+            box-shadow: 0 18px 40px rgba(0, 0, 0, 0.28);
+            transition: border-color 0.18s ease, transform 0.18s ease, box-shadow 0.18s ease;
+            cursor: default;
+        }
+        .task-card:hover,
+        .task-card.active {
+            border-color: var(--border-active);
+            box-shadow: 0 22px 48px rgba(0, 0, 0, 0.34), 0 0 0 1px rgba(128, 241, 255, 0.28);
+            transform: translateY(-2px);
+        }
+        .task-card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            background: linear-gradient(180deg, rgba(4, 18, 30, 0.18) 0%, transparent 24%, transparent 76%, rgba(4, 18, 30, 0.2) 100%);
+        }
+        .task-frame {
+            width: 100%;
+            height: 100%;
+            border: 0;
+            display: block;
+            pointer-events: none;
+            background: #06293b;
+        }
+        .task-name {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            z-index: 2;
+            padding: 8px 10px;
+            border-radius: 10px;
+            background: rgba(7, 23, 34, 0.76);
+            color: var(--text);
+            font-size: 12px;
+            font-weight: bold;
+            letter-spacing: 0.02em;
+            border: 1px solid rgba(128, 241, 255, 0.16);
+            backdrop-filter: blur(6px);
+        }
+        .info-panel {
+            display: grid;
+            grid-template-columns: 260px 1fr;
+            gap: 18px;
+            align-items: start;
+            padding: 18px 20px;
+            border-radius: 16px;
+            background: var(--panel-strong);
+            border: 1px solid rgba(128, 241, 255, 0.14);
+            box-shadow: 0 16px 36px rgba(0, 0, 0, 0.24);
+        }
+        .info-kicker {
+            font-size: 11px;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 8px;
+        }
+        .info-title {
+            font-size: 20px;
+            line-height: 1.3;
+            margin: 0 0 8px 0;
+        }
+        .info-meta {
+            color: var(--muted);
+            font-size: 12px;
+            line-height: 1.6;
+        }
+        .info-desc {
+            color: var(--text);
+            font-size: 13px;
+            line-height: 1.65;
+            padding-top: 20px;
+        }
+        .overview-summary {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 12px;
+        }
+        .family-block {
+            padding: 12px;
+            border-radius: 12px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(128, 241, 255, 0.12);
+        }
+        .family-title {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: #9fe4ff;
+            margin-bottom: 10px;
+        }
+        .task-chip-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .task-chip {
+            display: inline-flex;
+            align-items: center;
+            padding: 6px 10px;
+            border-radius: 999px;
+            background: rgba(111, 92, 255, 0.12);
+            border: 1px solid rgba(111, 92, 255, 0.3);
+            color: var(--text);
+            font-size: 11px;
+            line-height: 1.4;
+        }
+        @media (max-width: 1200px) {
+            .task-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+            .overview-summary { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 800px) {
+            .layout { padding: 12px; }
+            .task-grid { grid-template-columns: 1fr; }
+            .info-panel { grid-template-columns: 1fr; gap: 10px; }
+            .info-desc { padding-top: 0; }
+            .top-btn { right: 12px; min-width: 156px; }
+            #btn-open-tasks { top: 12px; }
+            #btn-open-index { top: 60px; }
+        }
+    </style>
+    <link rel="stylesheet" href="navigation.css">
+</head>
+<body>
+    <button class="top-btn" id="btn-open-tasks">Open Tasks Page</button>
+    <button class="top-btn" id="btn-open-index">Back to Demo</button>
+    <div class="layout">
+        <nav class="oneocean-site-nav" aria-label="OneOcean navigation">
+            <a href="../">Project</a>
+            <a href="../platform/">Platform</a>
+            <a href="https://github.com/anonymous-2026/OneOcean" target="_blank" rel="noopener">Code</a>
+            <a href="../oneocean_paper.pdf?v=aaai-21632439d4" target="_blank" rel="noopener">Paper</a>
+        </nav>
+        <section class="task-grid" id="task-grid">
+            <article class="task-card" data-task="TASK1" data-title="Task 1 - Surface Pollution Cleanup" data-uuvs="4 UUVs" data-desc="UUVs visit pollution sources and remain nearby until cleanup is complete, then move to the next source.">
+                <div class="task-name">Task 1 - Surface Pollution Cleanup</div>
+                <iframe class="task-frame" src="tasks.html?embed=1&task=TASK1" title="Task 1"></iframe>
+            </article>
+            <article class="task-card" data-task="TASK2" data-title="Task 2 - Underwater Pollution Lift" data-uuvs="5 UUVs" data-desc="Four UUVs lift a barrel clear of the seabed. A fifth joins from below, and the team carries it to the surface.">
+                <div class="task-name">Task 2 - Underwater Pollution Lift</div>
+                <iframe class="task-frame" src="tasks.html?embed=1&task=TASK2" title="Task 2"></iframe>
+            </article>
+            <article class="task-card" data-task="TASK3" data-title="Task 3 - Fish Protection / Herding" data-uuvs="8 UUVs" data-desc="The UUV team guides a fish school from the shore toward deeper water. Progress is measured at four milestones along the route. The task ends when the school reaches the target region.">
+                <div class="task-name">Task 3 - Fish Protection / Herding</div>
+                <iframe class="task-frame" src="tasks.html?embed=1&task=TASK3" title="Task 3"></iframe>
+            </article>
+            <article class="task-card" data-task="TASK4" data-title="Task 4 - Area Scan (3D Terrain)" data-uuvs="1 UUV" data-desc="A UUV scans the seabed along a lawnmower path and builds a 3D terrain grid.">
+                <div class="task-name">Task 4 - Area Scan (3D Terrain)</div>
+                <iframe class="task-frame" src="tasks.html?embed=1&task=TASK4" title="Task 4"></iframe>
+            </article>
+            <article class="task-card" data-task="TASK5" data-title="Task 5 - Pipeline Inspection (Leak Detection)" data-uuvs="1 UUV" data-desc="The UUV follows a subsea pipeline corridor, locates leak cues along the route, and confirms each leak point as it advances down the inspection path.">
+                <div class="task-name">Task 5 - Pipeline Inspection (Leak Detection)</div>
+                <iframe class="task-frame" src="tasks.html?embed=1&task=TASK5" title="Task 5"></iframe>
+            </article>
+            <article class="task-card" data-task="TASK6" data-title="Task 6 - Formation Transit" data-uuvs="6 UUVs" data-desc="A six-UUV team maintains a fixed formation while transiting through a sequence of waypoint gates under disturbance, with progress reflected by the route markers changing state after the team passes each gate.">
+                <div class="task-name">Task 6 - Formation Transit</div>
+                <iframe class="task-frame" src="tasks.html?embed=1&task=TASK6" title="Task 6"></iframe>
+            </article>
+        </section>
+
+        <section class="info-panel" aria-live="polite">
+            <div>
+                <div class="info-kicker">Task Overview</div>
+                <h1 class="info-title" id="info-title">OneOcean Task Ladder</h1>
+                <div class="info-meta" id="info-meta">10 tasks across Navigation, Sensing, and Coordination</div>
+            </div>
+            <div class="info-desc" id="info-desc">
+                <div class="overview-summary">
+                    <div class="family-block">
+                        <div class="family-title">Navigation</div>
+                        <div class="task-chip-list">
+                            <span class="task-chip">Go-to-Goal Under Currents</span>
+                            <span class="task-chip">Station Keeping</span>
+                            <span class="task-chip">Route Following</span>
+                            <span class="task-chip">Depth-Profile Tracking</span>
+                        </div>
+                    </div>
+                    <div class="family-block">
+                        <div class="family-title">Sensing</div>
+                        <div class="task-chip-list">
+                            <span class="task-chip">Area Scan</span>
+                            <span class="task-chip">Pipeline Inspection</span>
+                        </div>
+                    </div>
+                    <div class="family-block">
+                        <div class="family-title">Coordination</div>
+                        <div class="task-chip-list">
+                            <span class="task-chip">Formation Transit</span>
+                            <span class="task-chip">Surface Pollution Cleanup</span>
+                            <span class="task-chip">Underwater Pollution Lift</span>
+                            <span class="task-chip">Fish Protection / Herding</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        const cards = Array.from(document.querySelectorAll('.task-card'));
+        const taskGrid = document.getElementById('task-grid');
+        const infoTitle = document.getElementById('info-title');
+        const infoMeta = document.getElementById('info-meta');
+        const infoDesc = document.getElementById('info-desc');
+        const btnOpenTasks = document.getElementById('btn-open-tasks');
+        const btnOpenIndex = document.getElementById('btn-open-index');
+        const defaultDesc = `
+            <div class="overview-summary">
+                <div class="family-block">
+                    <div class="family-title">Navigation</div>
+                    <div class="task-chip-list">
+                        <span class="task-chip">Go-to-Goal Under Currents</span>
+                        <span class="task-chip">Station Keeping</span>
+                        <span class="task-chip">Route Following</span>
+                        <span class="task-chip">Depth-Profile Tracking</span>
+                    </div>
+                </div>
+                <div class="family-block">
+                    <div class="family-title">Sensing</div>
+                    <div class="task-chip-list">
+                        <span class="task-chip">Area Scan</span>
+                        <span class="task-chip">Pipeline Inspection</span>
+                    </div>
+                </div>
+                <div class="family-block">
+                    <div class="family-title">Coordination</div>
+                    <div class="task-chip-list">
+                        <span class="task-chip">Formation Transit</span>
+                        <span class="task-chip">Surface Pollution Cleanup</span>
+                        <span class="task-chip">Underwater Pollution Lift</span>
+                        <span class="task-chip">Fish Protection / Herding</span>
+                    </div>
+                </div>
+            </div>`;
+
+        function showDefaultOverview() {
+            cards.forEach((item) => item.classList.remove('active'));
+            infoTitle.textContent = 'OneOcean Task Ladder';
+            infoMeta.textContent = '10 tasks across Navigation, Sensing, and Coordination';
+            infoDesc.innerHTML = defaultDesc;
+        }
+
+        function setActiveCard(card) {
+            cards.forEach((item) => item.classList.toggle('active', item === card));
+            infoTitle.textContent = card.dataset.title;
+            infoMeta.textContent = card.dataset.uuvs;
+            infoDesc.textContent = card.dataset.desc;
+        }
+
+        cards.forEach((card) => {
+            card.addEventListener('mouseenter', () => setActiveCard(card));
+            card.addEventListener('focusin', () => setActiveCard(card));
+        });
+        if (taskGrid) taskGrid.addEventListener('mouseleave', showDefaultOverview);
+        if (btnOpenTasks) btnOpenTasks.addEventListener('click', () => { window.location.href = 'tasks.html'; });
+        if (btnOpenIndex) btnOpenIndex.addEventListener('click', () => { window.location.href = 'index.html'; });
+        showDefaultOverview();
+    </script>
+</body>
+</html>

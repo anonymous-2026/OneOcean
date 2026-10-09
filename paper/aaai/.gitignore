@@ -1,0 +1,10 @@
+.build/
+*.aux
+*.blg
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.synctex.gz
+source/main.pdf
+source/appendix.pdf

@@ -39,5 +39,9 @@ Data_pipeline/**/variants/
 # Credentials
 .copernicusmarine/
 
-# Local paper or preview artifacts
+# Local paper or preview artifacts (keep the published manuscripts)
 docs/*.pdf
+!docs/oneocean_paper.pdf
+!docs/oneocean_appendix.pdf
+!docs/OneOcean_AAAI_source.zip
+!paper/aaai/OneOcean_AAAI_source.zip

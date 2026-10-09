@@ -1,10 +1,10 @@
 # LLM Planner Diagnostics
 
-Source run: `V67LLMCOST_planningSuite_medium_cg2_s0-2_20260305_203000`. This is an aggregation of existing artifacts; no new model run was performed.
+Source run: `V67LLMCOST_planningSuite_medium_cg2_s0-2_20260305_203000`.
 
 Recorded protocol: dynamics `6dof`, current gain `2.0`, planner stride `200` steps, and output cap `96` tokens. Each method/task group contains three medium-difficulty seeds.
 
-Heuristic and behavior-cloning methods generate low-level actions. The LLM methods only propose discrete source or waypoint assignments and share deterministic low-level goal following, clipping, dynamics, current, and constraints. Their rows are therefore planning diagnostics, not an architecture-matched end-to-end ranking.
+Heuristic and Behavior Cloning (BC) methods generate low-level actions. LLMs select discrete source assignments or waypoints, which a shared deterministic controller executes. All LLM runs share goal following, clipping, dynamics, currents, and constraints.
 
 ## Task-level results
 
@@ -45,9 +45,8 @@ Heuristic and behavior-cloning methods generate low-level actions. The LLM metho
 
 ## Interpretation
 
-- `valid_plan_ratio` is the fraction of planner calls that produced a schema-valid assignment; `fallback_ratio` is its complement. A fallback uses the deterministic task allocator, so an LLM-labeled episode is not necessarily controlled by valid LLM plans at every planning event.
-- Cleanup tests discrete source assignment and dwell completion. Duplicate or invalid assignments can concentrate agents, which is visible in collision rate; this is not a continuous pollutant-mass experiment.
-- Area scan converts discrete waypoint assignments into a continuous coverage objective. A valid assignment can still repeatedly target already covered regions, so schema validity alone does not guarantee coverage efficiency.
-- Pipeline inspection requires spatial leak encounters, not only waypoint progress. A planner can produce valid low-frequency assignments while missing leaks between assigned waypoints; completion and waypoint error must be read together.
-- Energy is a trajectory-execution proxy, not model inference energy. Uncached latency and token counts are the relevant inference-cost measurements.
-- Existing records contain calls, valid/fallback outcomes, latency, and token counts for all three planning-sensitive tasks. The predeclared trigger for a new Qwen3-8B diagnostic is therefore not met, so expanding the model search would add cost without resolving a missing measurement.
+- `valid_plan_ratio` is the fraction of planner calls that produced a schema-valid assignment; `fallback_ratio` is its complement. Invalid responses invoke the deterministic task allocator.
+- Cleanup measures completed discrete sources after assignment and dwell. Duplicate or invalid assignments can concentrate agents and increase collisions.
+- Area Scan (AS) measures coverage from discrete waypoint assignments. Schema-valid assignments can revisit covered regions and reduce coverage efficiency.
+- Pipeline Inspection (PI) requires spatial leak encounters. Low-frequency waypoint assignments can miss leaks between waypoints; completion and waypoint error measure these aspects separately.
+- The energy column reports the action-energy proxy E, which measures executed command effort. Uncached latency and token counts measure inference cost.

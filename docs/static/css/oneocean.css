@@ -384,3 +384,17 @@ code {
     font-size: 0.84rem;
   }
 }
+
+.oneocean-hero .publication-authors {
+  margin-bottom: 0.75rem;
+  line-height: 1.9;
+}
+.publication-institutions {
+  line-height: 1.8;
+  max-width: 960px;
+  margin: 0 auto;
+}
+.oneocean-hero .corresponding-author {
+  font-size: 0.95rem;
+  overflow-wrap: anywhere;
+}

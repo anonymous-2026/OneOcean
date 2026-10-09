@@ -2,9 +2,8 @@
   <img src="docs/static/logo_with_title.png" alt="OneOcean logo with title">
 </p>
 
-<a href="https://anonymous-2026.github.io/demo"><img src="https://img.shields.io/badge/Online%20Demo-GitHub%20Pages-0EA5E9.svg?logo=github&logoColor=white" alt="Online Demo"></a>
+<a href="https://anonymous-2026.github.io/OneOcean/demo/"><img src="https://img.shields.io/badge/Online%20Demo-GitHub%20Pages-0EA5E9.svg?logo=github&logoColor=white" alt="Online Demo"></a>
 <a href="https://youtu.be/Fz2medRUxwo"><img src="https://img.shields.io/badge/Intro%20Video-YouTube-FF0000.svg?logo=youtube&logoColor=white" alt="Intro Video"></a>
-<a href="https://drive.google.com/drive/folders/1EvK_OkdLqaZkPoNPcyibpjaflZ3TATwZ?usp=sharing"><img src="https://img.shields.io/badge/Supplement-Materials-16A34A.svg?labelColor=16A34A" alt="Supplementary Materials"></a>
 <a href="docs/oneocean_paper.pdf"><img src="https://img.shields.io/badge/Paper-PDF-DC2626.svg" alt="Paper PDF"></a>
 <a href="https://zenodo.org/records/18837700"><img src="https://img.shields.io/badge/Dataset-Zenodo-2563EB.svg" alt="Zenodo Dataset"></a>
 <a href="https://huggingface.co/datasets/anonymous321123/OneOcean_Environment_Dataset"><img src="https://img.shields.io/badge/Dataset-HuggingFace-F59E0B.svg?logo=huggingface&logoColor=white" alt="HuggingFace Dataset"></a>
@@ -13,17 +12,22 @@
 <a href="https://gdal.org/en/stable/drivers/raster/gtiff.html"><img src="https://img.shields.io/badge/GeoTIFF-Terrain%20Raster-7C3AED.svg" alt="GeoTIFF"></a>
 <a href="https://www.gebco.net/"><img src="https://img.shields.io/badge/GEBCO-Bathymetry-1D4ED8.svg" alt="GEBCO"></a>
 
-This repository is the cleaned public codebase for the final OneOcean paper submission.
-It keeps only the code paths used by the paper:
+This is the official OneOcean repository, combining the simulation code, project website, platform guide, and interactive demo.
+
+**[Project website](https://anonymous-2026.github.io/OneOcean/) · [Platform](https://anonymous-2026.github.io/OneOcean/platform/) · [Online demo](https://anonymous-2026.github.io/OneOcean/demo/)**
+
+Anonymous submission.
+
+The repository includes:
 
 - `Data_pipeline/`: ocean-environment data pipeline and dataset-variant generation.
 - `OCPNet/`: pollution-field and current-aware pollution modeling code.
 - `benchmark_core/`: core quantitative benchmark used for the large evaluation tables.
 - `tracks/oceangym_benchmark/`: OceanGym and HoloOcean benchmark used for scene-grounded underwater evaluation and media generation.
 - `integrations/ros2/`: optional ROS 2 Jazzy bridge for standard robot middleware integration.
-- `tests/`: lightweight regression tests for the final benchmark surfaces.
-
-Exploratory branches, deprecated simulators, internal planning notes, and cached run outputs are intentionally excluded from version control.
+- `docs/demo/`: interactive browser demo, deployed with the project website.
+- `paper/aaai/`: anonymous AAAI manuscript, separate appendix, source archive, and build script.
+- `tests/`: regression tests for the benchmark.
 
 ## Repository layout
 
@@ -51,7 +55,7 @@ Notes:
   - `COPERNICUSMARINE_USERNAME`
   - `COPERNICUSMARINE_PASSWORD`
 - The OceanGym benchmark requires a working HoloOcean and Ocean package installation. That dependency is managed separately from the base requirements.
-- BC training and some local planner backends in `benchmark_core/` require extra ML dependencies such as `torch`.
+- Behavior Cloning (BC) training and some local planner backends in `benchmark_core/` require extra ML dependencies such as `torch`.
 
 ## Quickstart
 

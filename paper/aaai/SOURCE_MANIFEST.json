@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "paper_id": "6895",
+  "entrypoints": {
+    "main": "source/main.tex",
+    "appendix": "source/appendix.tex"
+  },
+  "compile_order": [
+    "appendix",
+    "main"
+  ],
+  "compiler": "pdflatex",
+  "anonymous_urls": {
+    "project": "https://anonymous-2026.github.io/OneOcean/",
+    "code": "https://github.com/anonymous-2026/OneOcean",
+    "demo": "https://anonymous-2026.github.io/OneOcean/demo/"
+  },
+  "pagination": {
+    "content_pages": 7,
+    "references_start_page": 8,
+    "main_total_pages": 8,
+    "appendix_pages": 9
+  },
+  "verification": {
+    "typesetting_log_clean": true,
+    "cross_references_resolved": true,
+    "reference_pages_exclusive": true,
+    "anonymous_identity_check": true
+  },
+  "source_files": {
+    "build.py": "80f3f6098f9cfb093831ff07edcd7dbb9ccb4f766e486d0bedcc76ae039841e8",
+    "README.md": "612e8a66ee7f91861f6bc92dfa63d24223cc618374822e170328adf939deefc6",
+    "source/aaai2027.bst": "5db7765ba99de5c1e4686f9b3940a0add9c5e702f2164514462bec130ccb6e3c",
+    "source/aaai2027.sty": "391bce82815bf698b8e382dd3ae7e30c75d7ab46df140cb295b1266016bc8623",
+    "source/appendix.bbl": "213a8cd235980ad245391f9d79cfcc8b4654b28101f87bfd363b477bea25a271",
+    "source/appendix.tex": "257796f5461ed574fd34e6f853d221b67829050b71b5fb8623f124ab8b08c33f",
+    "source/appendix_sections/01_data.tex": "072de381e5d1d99690bc62f6ab1998d18fb50d116f7f59d026580bca0d50a1c9",
+    "source/appendix_sections/02_tasks.tex": "311e18d920a701d9cffbdabb5e9639cfea6efeddae6ab05977ed281e8569f73d",
+    "source/appendix_sections/03_models_ros.tex": "a9c233abcf939497b1c4a15a81e6673390903f2641a0ba62ca9e9e3d32691721",
+    "source/appendix_sections/04_protocol.tex": "cad941de18b3273c4dc9f0ebb248103f6ecc416ab99b3afda6a8de1f91689f28",
+    "source/appendix_sections/05_core_diagnostics.tex": "b71bc6e72a4d6996c5d00ce183192799402da6d92ef4d4826fab473ed27cddf3",
+    "source/appendix_sections/06_external_diagnostics.tex": "d1a95346a253f17e99c5a94ba801a6549f6b5e85ad9e4c1b44409c0231ebc6f4",
+    "source/figures/abstract.pdf": "79afd28538835431235f1cf7d665e02b2df1c33317bbc5b19295b37f0d7aa04a",
+    "source/figures/cleanup_scaling_dualpanel.pdf": "d6275732071b8427c9157f11c61ff52be97ae84b76f5ecfff5ccdb0a0d5e5289",
+    "source/figures/dataset_latest_multispecies_suite_seed03_panel.png": "0ffe0ccad599d80e03f020ebb02667c57110cf2b12b3290bf5bb62ee6ba61b99",
+    "source/figures/difficulty_ladder_dualpanel.pdf": "c90b15f125d988d6f6914753904ab99a2084f23c92e02bff21b6bb4d08504441",
+    "source/figures/h3_oceangym_image1_containment.jpg": "a27cb7c70aef68fbc882da25da30371155f2374401ed9a0f1dd8936568070f7a",
+    "source/figures/h3_oceangym_image2_formation.jpg": "bd822395464d538c5005d25ecd3c483ac17327e5f18e43cc0d5699277c95c1ae",
+    "source/figures/ocpnet_base_current_3d_diffusion_el25_az045.pdf": "e14a3c87130215bc09eaef2c5c3b9b7ea3a8cf1c47613c7959e913687f41f52a",
+    "source/figures/ocpnet_multispecies_seed04_panel.pdf": "2f0a1e2a9171964a18d0bb041e056e7bb98d4f47101db664e003fe744d9ca3e6",
+    "source/figures/overview2.jpg": "206af2cf5dbe56189a17dd038486e2ef674237d9e7e4a004ed17c3dae3ad483f",
+    "source/figures/task1_ui_off.png": "4b8bab89715b09467816605c2a503036515f7b95c2fbb1bda19361957917939f",
+    "source/figures/task2_ui_off.png": "91a6f042b967efb44515255458ae6f6ce138358abd5b70e5897569f73be43fe6",
+    "source/figures/task3_ui_off.png": "c745dfe12f93b1599fd7586e526f06cdb82c65065683a03d194efe438b30d769",
+    "source/figures/task4_ui_off.png": "feafddfd0dee89e72ba9c9b96eef745a0636876caa899eae17f5d259752b70b7",
+    "source/main.bbl": "119ed1072b9d19d8deaf076079ad7dde02f226525258420297299676b0a4daba",
+    "source/main.tex": "72533d44a1d2024b55701e470f6b5de2a6c054394594364d6cf2e4aa90b53bab",
+    "source/references.bib": "bbf10c4c16d05c7cc921edd85b55f4104f139a94965963b754366a4937b49a99",
+    "source/sections/00_abstract.tex": "2f7ffa34f2f2da8790abbfead79a16f472e52335276bdc0c0110144efb65b8ba",
+    "source/sections/01_introduction.tex": "a8f0fa6acf7778c39b63bd38346b36e293dc1beb238aeae0f70205240dedd455",
+    "source/sections/02_related_work.tex": "52d2207271e4fc4e3b08ea9371ee667115ad6db57410995fd8a72c28ccb80743",
+    "source/sections/03_method.tex": "b078564b84142b3ac0fc0ca6909a50b29e17f0d626f7eb3c73b8e929a70fd0da",
+    "source/sections/04_experiments.tex": "15ea5d478fb71b3346d09f0f269953a6926f209f3f0f2dc7898ed27616690105",
+    "source/sections/05_conclusion.tex": "8bbbbb3ef703b0bdd0f1b292573b4fa34aea8cc51aefd30cb85d49e267281170",
+    "source/sections/05_discussion.tex": "a8b6cf2ed99145d4bf2735d742743f819fa9bcaf100bb038c9e0616121643e74"
+  },
+  "deliverables": {
+    "OneOcean_AAAI_Anonymous.pdf": "21632439d4d668fa4872a9b61d2dfee80fb4791175e09235cac083d3b1b213f3",
+    "OneOcean_AAAI_Appendix.pdf": "e9842b78b0f0437b987026b13feae59b0da8f8828c7a054aeda6e5e799dab121",
+    "OneOcean_AAAI_source.zip": "7d51f6ab085197d65dac4db56fab5cef309705969e2c8978b8cd7998e1c7bb0f"
+  }
+}

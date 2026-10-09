@@ -1,0 +1,19 @@
+\begin{thebibliography}{3}
+\providecommand{\natexlab}[1]{#1}
+
+\bibitem[{{Copernicus Marine Environment Monitoring Service
+  (CMEMS)}(2025)}]{CopernicusGOPAF2025}
+{Copernicus Marine Environment Monitoring Service (CMEMS)}. 2025.
+\newblock {Global Ocean Physics Analysis and Forecast}.
+\newblock \url{https://data.marine.copernicus.eu/}.
+\newblock Accessed: 2025-09-07.
+
+\bibitem[{{Copernicus Marine Service}(2024)}]{copernicus}
+{Copernicus Marine Service}. 2024.
+\newblock {Copernicus Marine Service: Ocean Monitoring and Forecasting}.
+
+\bibitem[{{GEBCO Compilation Group}(2025)}]{GEBCO2025}
+{GEBCO Compilation Group}. 2025.
+\newblock The {GEBCO} 2025 Grid -- A Global 15 Arc-Second Bathymetry Dataset.
+
+\end{thebibliography}

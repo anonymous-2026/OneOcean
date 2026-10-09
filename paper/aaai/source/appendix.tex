@@ -1,0 +1,50 @@
+\documentclass[letterpaper]{article}
+\PassOptionsToPackage{table}{xcolor}
+\usepackage[submission]{aaai2027}
+\nocopyright
+\usepackage[hyphens]{url}
+\usepackage{graphicx}
+\urlstyle{rm}
+\def\UrlFont{\rm}
+\usepackage{natbib}
+\usepackage{caption}
+\frenchspacing
+
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{makecell}
+\usepackage{multirow}
+
+\pdfinfo{
+/TemplateVersion (2027.1)
+}
+
+\setcounter{secnumdepth}{1}
+\newcolumntype{Y}{>{\centering\arraybackslash}X}
+
+\title{One Ocean, Many Tasks: Supplementary Appendix}
+\author{Anonymous Submission}
+\affiliations{}
+
+\begin{document}
+\maketitle
+
+\noindent\textbf{Paper ID:} 6895\par
+\noindent This appendix details the environment representation, task objectives, motion and pollution models, and evaluation protocol. It also reports complementary studies of dynamics, disturbance strength, planner decisions, and scene-backed multi-agent behavior.
+
+\appendix
+\renewcommand{\thefigure}{A\arabic{figure}}
+\renewcommand{\thetable}{A\arabic{table}}
+\renewcommand{\theequation}{A\arabic{equation}}
+\input{appendix_sections/01_data}
+\input{appendix_sections/02_tasks}
+\input{appendix_sections/03_models_ros}
+\input{appendix_sections/04_protocol}
+\input{appendix_sections/05_core_diagnostics}
+\input{appendix_sections/06_external_diagnostics}
+
+\bibliography{references}
+
+\end{document}

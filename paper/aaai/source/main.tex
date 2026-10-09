@@ -1,0 +1,90 @@
+\documentclass[letterpaper]{article} % DO NOT CHANGE THIS
+\PassOptionsToPackage{table}{xcolor}
+\usepackage[submission]{aaai2027} % DO NOT CHANGE THIS
+% Suppress the review-only footer while keeping the anonymous submission layout.
+\nocopyright
+\makeatletter
+\gdef\showauthors@on{T}
+\makeatother
+\usepackage[hyphens]{url} % DO NOT CHANGE THIS
+\usepackage{graphicx} % DO NOT CHANGE THIS
+\urlstyle{rm} % DO NOT CHANGE THIS
+\def\UrlFont{\rm} % DO NOT CHANGE THIS
+\usepackage{natbib} % DO NOT CHANGE THIS AND DO NOT ADD OPTIONS
+\usepackage{caption} % DO NOT CHANGE THIS AND DO NOT ADD OPTIONS
+\frenchspacing % DO NOT CHANGE THIS
+
+% Packages required by the migrated OneOcean manuscript.
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{makecell}
+\usepackage{multirow}
+\usepackage{xr}
+\externaldocument[supp-]{appendix}
+\usepackage[caption=false]{subfig}
+
+\pdfinfo{
+/TemplateVersion (2027.1)
+}
+
+\setcounter{secnumdepth}{0}
+
+% Revision markup retained from the source manuscript; revisions render in black.
+\newcommand{\revise}[1]{#1}
+
+% Table colors and symbols retained from the source manuscript.
+\definecolor{oursbg}{RGB}{255,250,230}
+\definecolor{scenarioGray}{RGB}{245,245,245}
+\definecolor{bestblue}{RGB}{0,56,128}
+\newcommand{\best}[1]{\textcolor{bestblue}{\textbf{#1}}}
+\definecolor{symgreen}{RGB}{140,200,140}
+\definecolor{symred}{RGB}{235,170,170}
+\newcommand{\symdot}[1]{\textcolor{#1}{\raisebox{-0.45\height}{\scalebox{1.12}{\Large\textbullet}}}}
+\newcommand{\symyes}{\symdot{symgreen}}
+\newcommand{\symno}{\symdot{symred}}
+\newcommand{\sympartial}{\symyes}
+\newcolumntype{Y}{>{\centering\arraybackslash}X}
+
+\title{One Ocean, Many Tasks: A Data-Grounded Simulation Suite and Benchmark for Marine Robotics}
+
+\author{
+    Anonymous submission \hfill \textnormal{Paper ID: 6895} \hfill \textnormal{Content Areas: ROB: Datasets \& Benchmarks for Robotics}
+}
+\affiliations{
+}
+
+\begin{document}
+
+\maketitle
+
+\begin{figure*}[t]
+    \centering
+    \includegraphics[width=0.99\textwidth]{figures/abstract.pdf}
+    \caption{OneOcean overview. A shared ocean dataset supplies two simulation backends and a ten-task benchmark covering navigation, sensing, coordination, and pollution response.}
+    \label{fig:overview}
+\end{figure*}
+
+\begin{abstract}
+\input{sections/00_abstract}
+\end{abstract}
+
+\begin{links}
+    \link{Project}{https://anonymous-2026.github.io/OneOcean/}
+    \link{Code}{https://github.com/anonymous-2026/OneOcean}
+    \link{Demo}{https://anonymous-2026.github.io/OneOcean/demo/}
+\end{links}
+
+% Scientific text is shared with the public paper; front matter stays anonymous.
+\input{sections/01_introduction}
+\input{sections/02_related_work}
+\input{sections/03_method}
+\input{sections/04_experiments}
+\input{sections/05_discussion}
+\input{sections/05_conclusion}
+
+\clearpage
+\bibliography{references}
+
+\end{document}
