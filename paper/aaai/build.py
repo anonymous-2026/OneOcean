@@ -2,7 +2,6 @@
 """Build and verify the anonymous AAAI paper and separate appendix."""
 
 from pathlib import Path
-import hashlib
 import json
 import re
 import subprocess
@@ -35,10 +34,6 @@ BAD_LOG = re.compile(
     r"Emergency stop|Fatal error).*$",
     re.MULTILINE,
 )
-
-
-def sha256(path):
-    return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
 def require_anonymous(text, label):
@@ -200,22 +195,8 @@ def main():
                 raise RuntimeError(f"Build artifact entered source archive: {name}")
             if Path(name).name in {"main.pdf", "appendix.pdf", "BASELINE.json"}:
                 raise RuntimeError(f"Excluded file entered source archive: {name}")
-    manifest = {
-        "schema_version": 1,
-        "paper_id": "6895",
-        "entrypoints": {"main": "source/main.tex", "appendix": "source/appendix.tex"},
-        "compile_order": ["appendix", "main"],
-        "compiler": "pdflatex",
-        "anonymous_urls": ANONYMOUS_URLS,
-        "pagination": pages,
-        "verification": {"typesetting_log_clean": True, "cross_references_resolved": True,
-                         "reference_pages_exclusive": True, "anonymous_identity_check": True},
-        "source_files": {path.relative_to(ROOT).as_posix(): sha256(path) for path in package_files},
-        "deliverables": {path.name: sha256(path) for path in (main_pdf, appendix_pdf, archive)},
-    }
-    (ROOT / "SOURCE_MANIFEST.json").write_text(json.dumps(manifest, indent=2) + "\n")
-    print(f"Verified {pages['main_total_pages']}-page main paper: 7 content pages, references from page 8.")
-    print(f"Verified separate {pages['appendix_pages']}-page appendix and anonymous source archive.")
+    print(f"Created {main_pdf.name} ({pages['main_total_pages']} pages), "
+          f"{appendix_pdf.name} ({pages['appendix_pages']} pages), and {archive.name}.")
 
 
 if __name__ == "__main__":
